@@ -6,7 +6,10 @@ public class SpawnManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private float _enemySpawnTime = 4.0f;
+    private bool _stopSpawning = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +24,18 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
-        while(true)
+        while(_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-12.0f, 12.0f), 8,0);
-            Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(_enemySpawnTime);
         }
     }
-    // spawn game objects every 5 seconds
+
+
+    public void onPlayerDeath()
+    {
+        _stopSpawning = true;
+    }
 }
