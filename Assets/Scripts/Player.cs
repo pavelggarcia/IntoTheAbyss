@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
     [SerializeField] private bool _isTripleShotActive = false;
+    [SerializeField] private int _TripleShotTime = 5;
 
 
     // Start is called before the first frame update
@@ -92,5 +93,18 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    public void TripleShotActive()
+    {
+        
+        _isTripleShotActive = true;
+        StartCoroutine("TripleShotPowerDownRoutine");
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(_TripleShotTime);
+        _isTripleShotActive = false;
+    }
+    
 
 }
