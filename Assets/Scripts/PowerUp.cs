@@ -7,11 +7,17 @@ public class PowerUp : MonoBehaviour
     [SerializeField] private int _powerUpSpeed = 3;
     private Player _player;
 
+    //ID for PowerUps
+    // 0 = Triple Shot
+    // 1 = speed    
+    // 2 = shields
+    [SerializeField] private int powerupID;
+
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        if(_player == null)
+        if (_player == null)
         {
             Debug.LogError("Player is NULL");
         }
@@ -21,19 +27,40 @@ public class PowerUp : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.down * Time.deltaTime * _powerUpSpeed);
-        if(transform.position.y <= -6)
+        if (transform.position.y <= -6)
         {
             Destroy(this.gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
-       if(other.tag == "Player")
-       {
-        _player.TripleShotActive();
-        Destroy(this.gameObject);
-       } 
+        if (other.tag == "Player")
+        {
+            if (_player != null)
+            {
+                switch (powerupID)
+                {
+                    case 0:
+                        _player.TripleShotActive();
+                        break;
+                    case 1:
+                        _player.SpeedBoostActive();
+                        break;
+                    case 2:
+                        Debug.Log("You got shielded son!");
+                        break;
+                    default:
+                        Debug.Log("Default Value");
+                        break;
+                }
+            }
+
+
+            Destroy(this.gameObject);
+        }
+
+
+
     }
 }
