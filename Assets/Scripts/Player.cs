@@ -14,19 +14,19 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField] private bool _isTripleShotActive = false;
     private int _TripleShotTime = 5;
-   // private bool _isSpeedBoostActive = false;
-    //[SerializeField] private bool _isSpeedActive = false;
-   // [SerializeField] private int _SpeedTime = 3;
+    private bool _isShieldActive = false;
+    [SerializeField] private GameObject _shield;
+
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(0,0,0);
+        transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
-        if(_spawnManager == null)
+        if (_spawnManager == null)
         {
             Debug.LogError("The spawn manager is NULL.");
         }
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
 
 
-        if(_isTripleShotActive == true)
+        if (_isTripleShotActive == true)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
         }
@@ -64,16 +64,16 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-       
+
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        
 
 
-       
-        
+
+
+
         transform.Translate(direction * _speed * Time.deltaTime);
-        
+
 
 
         // THis code restricts the player movement in the Y axis
@@ -98,9 +98,19 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
-        _lives -= 1;
+
+
+        if (_isShieldActive == true)
+        {
+            _isShieldActive = false;
+            _shield.SetActive(false);
+            return;
         
-        if(_lives < 1)
+        }
+
+        _lives -= 1;
+
+        if (_lives < 1)
         {
             _spawnManager.onPlayerDeath();
             Destroy(this.gameObject);
@@ -108,12 +118,12 @@ public class Player : MonoBehaviour
     }
     public void TripleShotActive()
     {
-        
+
         _isTripleShotActive = true;
         StartCoroutine("TripleShotPowerDownRoutine");
     }
 
-   
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(_TripleShotTime);
@@ -123,33 +133,27 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        //_isSpeedBoostActive = true;
+
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        //_isSpeedBoostActive = false;
+
         _speed /= _speedMultiplier;
     }
-
-    /* public void SpeedActive()
+    public void ShieldsActive()
     {
-        _isSpeedActive = true;
-        StartCoroutine("SpeedPowerUpRoutine");
+        _isShieldActive = true;
+
+        _shield.SetActive(true);
 
     }
 
-    IEnumerator SpeedPowerUpRoutine()
-    {
-        _speed = 8.5f;
-        yield return new WaitForSeconds(_SpeedTime);
-        _isSpeedActive = false;
-        _speed = 5.0f;
-    }  */
 
-   
-    
+
+
+
 
 }

@@ -49,6 +49,7 @@ public class PowerUp : MonoBehaviour
                         break;
                     case 2:
                         Debug.Log("You got shielded son!");
+                        _player.ShieldsActive();
                         break;
                     default:
                         Debug.Log("Default Value");
