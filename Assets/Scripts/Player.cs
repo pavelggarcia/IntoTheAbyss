@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class Player : MonoBehaviour
     private int _TripleShotTime = 5;
     private bool _isShieldActive = false;
     [SerializeField] private GameObject _shield;
+    [SerializeField] private int _score;
+    private UIManager _UIManager;
 
 
 
@@ -23,6 +26,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
@@ -150,6 +154,15 @@ public class Player : MonoBehaviour
         _shield.SetActive(true);
 
     }
+
+    //public method to add 10 to the game
+    //communicate with UI to update Score
+    public void AddToScore(int points)
+    {
+        _score += points;
+        _UIManager.UpdateScore(_score);
+    }
+    
 
 
 
