@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _shield;
     [SerializeField] private int _score;
     private UIManager _UIManager;
+    private GameManager _gameManager;
 
 
 
@@ -33,6 +34,12 @@ public class Player : MonoBehaviour
         if (_spawnManager == null)
         {
             Debug.LogError("The spawn manager is NULL.");
+        }
+
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if(_gameManager == null)
+        {
+            Debug.LogError("Game Manager is NULL");
         }
     }
 
@@ -120,6 +127,9 @@ public class Player : MonoBehaviour
         {
             _spawnManager.onPlayerDeath();
             _UIManager.GameOverText();
+            _UIManager.RestartLevelText();
+            _gameManager.GameOver();
+
             Destroy(this.gameObject);
         }
     }

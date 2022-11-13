@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,18 +11,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite[] _liveSprite;
     [SerializeField] private Image _LivesImg;
     [SerializeField] private TMP_Text _gameOverText;
+    [SerializeField] private TMP_Text _restartLevelText;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         _gameOverText.enabled = false;
+        _restartLevelText.enabled = false;
+        
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
     public void UpdateScore(int PlayerScore)
     {
@@ -48,5 +53,10 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             
         }
+    }
+    public void RestartLevelText()
+    {
+        _restartLevelText.enabled = true;
+        
     }
 }
