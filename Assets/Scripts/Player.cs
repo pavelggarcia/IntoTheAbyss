@@ -113,6 +113,8 @@ public class Player : MonoBehaviour
         }
 
         _lives -= 1;
+        
+        _UIManager.UpdateLives(_lives);
 
         if (_lives < 1)
         {

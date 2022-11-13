@@ -7,6 +7,8 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private Sprite[] _liveSprite;
+    [SerializeField] private Image _LivesImg;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +25,10 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int PlayerScore)
     {
         _scoreText.text = "Score: " + PlayerScore;
+    }
+
+    public void UpdateLives(int currentLives)
+    {
+        _LivesImg.sprite = _liveSprite[currentLives];
     }
 }
