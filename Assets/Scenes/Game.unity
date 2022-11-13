@@ -1191,6 +1191,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
   - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
   _LivesImg: {fileID: 278389031}
+  _gameOverText: {fileID: 1168175231}
 --- !u!1 &2008139193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 2693264497841380790, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
   _enemyContainer: {fileID: 55107475}
-  _enemySpawnTime: 5
+  _enemySpawnTime: 2
   powerups:
   - {fileID: 2804169281616345131, guid: 263c19c2145846f46bae0c17680c26e5, type: 3}
   - {fileID: 8419533275703621565, guid: 967f09c07d3001d4e8e2b206c58e6b67, type: 3}
