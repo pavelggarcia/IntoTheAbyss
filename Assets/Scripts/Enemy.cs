@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
             
-            Destroy(this.gameObject, 2.5f);
+            Destroy(this.gameObject,2.5f);
         }
 
 
@@ -73,13 +73,14 @@ public class Enemy : MonoBehaviour
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
             
-            Destroy(this.gameObject, 2.5f);
+            Destroy(this.gameObject,2.5f);
         }
     }
     private void RemoveComponents()
     {
         Destroy(_rigidBody2D);
         Destroy(_boxCollider2D);
+        
     }
     
 }
