@@ -6,6 +6,8 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] private int _powerUpSpeed = 3;
     private Player _player;
+    [SerializeField] private AudioClip _powerupAudio;
+
 
     //ID for PowerUps
     // 0 = Triple Shot
@@ -21,6 +23,8 @@ public class PowerUp : MonoBehaviour
         {
             Debug.LogError("Player is NULL");
         }
+
+       
     }
 
     // Update is called once per frame
@@ -39,17 +43,21 @@ public class PowerUp : MonoBehaviour
         {
             if (_player != null)
             {
+                AudioSource.PlayClipAtPoint(_powerupAudio, transform.position);
                 switch (powerupID)
                 {
                     case 0:
                         _player.TripleShotActive();
+                        
                         break;
                     case 1:
                         _player.SpeedBoostActive();
+                        
                         break;
                     case 2:
-                        Debug.Log("You got shielded son!");
+                        
                         _player.ShieldsActive();
+                        
                         break;
                     default:
                         Debug.Log("Default Value");
@@ -57,7 +65,7 @@ public class PowerUp : MonoBehaviour
                 }
             }
 
-
+            
             Destroy(this.gameObject);
         }
 

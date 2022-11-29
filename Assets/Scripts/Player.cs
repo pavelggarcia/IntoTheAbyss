@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     private GameManager _gameManager;
     [SerializeField] private GameObject _rightEngine;
     [SerializeField] private GameObject _leftEngine;
+    [SerializeField] private AudioClip _laserAudio;
+    private AudioSource _audioSource;
+    //[SerializeField] private AudioClip _explosionAudio;
+    
 
 
 
@@ -32,6 +36,7 @@ public class Player : MonoBehaviour
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -42,6 +47,15 @@ public class Player : MonoBehaviour
         if(_gameManager == null)
         {
             Debug.LogError("Game Manager is NULL");
+        }
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("AudioSource on Player is NULL");
+        }
+        else
+        {
+            _audioSource.clip = _laserAudio;
         }
     }
 
@@ -54,9 +68,11 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
+        
     }
     void FireLaser()
     {
+        
 
         _canFire = Time.time + _fireRate;
 
@@ -70,6 +86,9 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
+        
+        _audioSource.Play();
+        
     }
 
     void CalculateMovement()
@@ -137,6 +156,7 @@ public class Player : MonoBehaviour
         if (_lives < 1)
         {
             _spawnManager.onPlayerDeath();
+            //AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
             _UIManager.GameOverText();
             _UIManager.RestartLevelText();
             _gameManager.GameOver();
@@ -148,15 +168,20 @@ public class Player : MonoBehaviour
     {
 
         _isTripleShotActive = true;
+        
         StartCoroutine("TripleShotPowerDownRoutine");
     }
 
 
     IEnumerator TripleShotPowerDownRoutine()
     {
+        //I want to have it so that when triple shot is called it starts a 5 second countdown timer(which will be the wait for seconds), if more triple shot is picked up, then the delay should be extended, once the 
         yield return new WaitForSeconds(_TripleShotTime);
         _isTripleShotActive = false;
+        
     }
+    // Power up touches player, power up script calls triple shot active method, triple shot method starts triple shot corotuine which starts a 5 second timer
+    // need to make it so that once the power up is collected, it adds 5 seconds to the TripleShotTime, Triple shot time should start at 0, and once powerup is collected it will add 5 seconds, if a second one is collected it will add another 5 seconds, once the time runs out, back to single laser. 
 
 
     public void SpeedBoostActive()
