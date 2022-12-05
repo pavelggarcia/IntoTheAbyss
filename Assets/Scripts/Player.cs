@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _rightEngine;
     [SerializeField] private GameObject _leftEngine;
     [SerializeField] private AudioClip _laserAudio;
+    [SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
     //[SerializeField] private AudioClip _explosionAudio;
     
@@ -119,13 +120,13 @@ public class Player : MonoBehaviour
         }
 
         // This code makes it so that the player wraps around when going off screen in the X axis
-        if (transform.position.x >= 13)
+        if (transform.position.x >= 10.5f)
         {
-            transform.position = new Vector3(-13, transform.position.y, 0);
+            transform.position = new Vector3(-10.5f, transform.position.y, 0);
         }
-        else if (transform.position.x <= -13)
+        else if (transform.position.x <= -10.5f)
         {
-            transform.position = new Vector3(13, transform.position.y, 0);
+            transform.position = new Vector3(10.5f, transform.position.y, 0);
         }
     }
     public void Damage()
@@ -210,6 +211,16 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _UIManager.UpdateScore(_score);
+    }
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.tag == "EnemyLaser")
+        {
+            Damage();
+            AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
+            Destroy(other.gameObject);
+            
+        }    
     }
     
 

@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D _boxCollider2D;
     //[SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
+    
+    [SerializeField] private GameObject _laserPrefab;
+    private bool _canFire = false;
+    private float _fireTime = -1f;
+    private float _fireRate;
 
 
 
@@ -54,9 +59,15 @@ public class Enemy : MonoBehaviour
         transform.Translate(Vector3.down * Time.deltaTime * _enemySpeed);
         if (transform.position.y <= -6)
         {
-            float randomX = Random.Range(-12.0f, 12.0f);
+            float randomX = Random.Range(-10.0f, 10.0f);
             transform.position = new Vector3(randomX, 8, 0);
         }
+        if(Time.time > _fireTime)
+        {
+            FireLaser();
+        }
+        
+        
 
     }
 
@@ -97,6 +108,22 @@ public class Enemy : MonoBehaviour
     {
         Destroy(_rigidBody2D);
         Destroy(_boxCollider2D);
+        
+    }
+    private void FireLaser()
+
+    {
+        _fireRate = Random.Range(3.0f, 7.1f);
+        _fireTime = Time.time + _fireRate;
+        
+        _canFire = true;
+        if(_canFire == true)
+        {
+            Instantiate(_laserPrefab, transform.position + new Vector3(0,-3,0), Quaternion.identity);
+        }
+        _canFire = false;
+        
+        
         
     }
     

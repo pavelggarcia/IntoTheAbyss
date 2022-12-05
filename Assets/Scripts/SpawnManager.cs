@@ -34,7 +34,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-12.0f, 12.0f), 8, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-10.0f, 10.0f), 8, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(_enemySpawnTime);
@@ -48,7 +48,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
 
-            Vector3 posToSpawn = new Vector3(Random.Range(-12.0f, 12.0f), 8, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-10.0f, 10.0f), 8, 0);
             int randomPowerUp = Random.Range(0,3);
             
            Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
