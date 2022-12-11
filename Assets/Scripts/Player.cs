@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private float _canFire = -1f;
     [SerializeField] private int _lives = 3;
+    private int _shieldDamage = 3;
+
     private SpawnManager _spawnManager;
     [SerializeField] private bool _isTripleShotActive = false;
     private int _TripleShotTime = 5;
@@ -25,6 +27,8 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserAudio;
     [SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
+    private SpriteRenderer _shieldSprite;
+    
     
     
     void Start()
@@ -33,6 +37,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
+        
 
         if (_spawnManager == null)
         {
@@ -88,7 +93,7 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
-        
+
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             _speed = 10f;
@@ -119,13 +124,40 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
+
         if (_isShieldActive == true)
         {
+            _shieldSprite = _shield.GetComponent<SpriteRenderer>();
+            _shieldDamage -= 1;
+            if(_shieldDamage == 2)
+            {
+                _shieldSprite.color = new Color(1,0.5f, 0.5f);
+                return;
+            }
+            if(_shieldDamage == 1)
+            {
+                _shieldSprite.color = new Color(1,0,0);
+                return;
+            }
+            if(_shieldDamage == 0)
+            {
+                _isShieldActive = false;
+                _shield.SetActive(false);
+                return;
+            }
+            
+        
+        }
+
+        // need to set shields to 0
+        /* if (_isShieldActive == true)
+        {
+            
             _isShieldActive = false;
             _shield.SetActive(false);
             return;
         
-        }
+        } */
 
         _lives -= 1;
         
@@ -196,6 +228,11 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "EnemyLaser")
         {
+            if(_isShieldActive == true)
+            {
+                Destroy(other.gameObject);
+                
+            }
             Damage();
             AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
             Destroy(other.gameObject);
