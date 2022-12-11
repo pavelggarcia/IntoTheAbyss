@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
     private SpriteRenderer _shieldSprite;
+    private int _laserShots = 15;
     
     
     
@@ -67,7 +68,13 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            FireLaser();
+            if(_laserShots >= 1)
+            {
+                _laserShots -= 1;
+                FireLaser();
+                _UIManager.UpdateAmmoText(_laserShots);
+            }
+            
         }
         
     }
@@ -124,6 +131,7 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
+        // This code manages the Shield Damage and visualization
 
         if (_isShieldActive == true)
         {
@@ -149,15 +157,7 @@ public class Player : MonoBehaviour
         
         }
 
-        // need to set shields to 0
-        /* if (_isShieldActive == true)
-        {
-            
-            _isShieldActive = false;
-            _shield.SetActive(false);
-            return;
         
-        } */
 
         _lives -= 1;
         

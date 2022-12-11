@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _LivesImg;
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private TMP_Text _restartLevelText;
+    [SerializeField] private TMP_Text _ammoText;
     
 
     // Start is called before the first frame update
@@ -41,6 +42,10 @@ public class UIManager : MonoBehaviour
     {
         StartCoroutine(FlashGameOverRoutine());
         
+    }
+    public void UpdateAmmoText(int AmmoCount)
+    {
+        _ammoText.text = "Ammo: " + AmmoCount;
     }
 
     IEnumerator FlashGameOverRoutine()
