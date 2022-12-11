@@ -10,23 +10,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _enemySpawnTime = 4.0f;
     private bool _stopSpawning = false;
     [SerializeField] private GameObject[] powerups; 
-    //[SerializeField] private GameObject _SpeedPowerUpPrefab;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
     public void StartSpawning()
     {
         StartCoroutine("SpawnEnemyRoutine");
         StartCoroutine("SpawnPowerUpRoutine");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     IEnumerator SpawnEnemyRoutine()

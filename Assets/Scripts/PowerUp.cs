@@ -8,11 +8,6 @@ public class PowerUp : MonoBehaviour
     private Player _player;
     [SerializeField] private AudioClip _powerupAudio;
 
-
-    //ID for PowerUps
-    // 0 = Triple Shot
-    // 1 = speed    
-    // 2 = shields
     [SerializeField] private int powerupID;
 
     // Start is called before the first frame update
@@ -23,8 +18,6 @@ public class PowerUp : MonoBehaviour
         {
             Debug.LogError("Player is NULL");
         }
-
-       
     }
 
     // Update is called once per frame
@@ -64,12 +57,7 @@ public class PowerUp : MonoBehaviour
                         break;
                 }
             }
-
-            
             Destroy(this.gameObject);
         }
-
-
-
     }
 }

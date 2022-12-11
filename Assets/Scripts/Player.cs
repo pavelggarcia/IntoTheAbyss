@@ -25,13 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserAudio;
     [SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
-    //[SerializeField] private AudioClip _explosionAudio;
     
-
-
-
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -73,12 +68,7 @@ public class Player : MonoBehaviour
     }
     void FireLaser()
     {
-        
-
         _canFire = Time.time + _fireRate;
-
-
-
         if (_isTripleShotActive == true)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
@@ -96,19 +86,17 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-
-
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
-
-
-
-
-
         transform.Translate(direction * _speed * Time.deltaTime);
-
-
-
+        
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _speed = 10f;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _speed = 5f;
+        }
         // THis code restricts the player movement in the Y axis
         if (transform.position.y >= 6)
         {
@@ -131,8 +119,6 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
-
-
         if (_isShieldActive == true)
         {
             _isShieldActive = false;
@@ -157,19 +143,16 @@ public class Player : MonoBehaviour
         if (_lives < 1)
         {
             _spawnManager.onPlayerDeath();
-            //AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
+            
             _UIManager.GameOverText();
             _UIManager.RestartLevelText();
             _gameManager.GameOver();
-
             Destroy(this.gameObject);
         }
     }
     public void TripleShotActive()
     {
-
-        _isTripleShotActive = true;
-        
+        _isTripleShotActive = true;        
         StartCoroutine("TripleShotPowerDownRoutine");
     }
 
@@ -187,7 +170,6 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
@@ -205,8 +187,6 @@ public class Player : MonoBehaviour
 
     }
 
-    //public method to add 10 to the game
-    //communicate with UI to update Score
     public void AddToScore(int points)
     {
         _score += points;

@@ -11,41 +11,40 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D _boxCollider2D;
     //[SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
-    
     [SerializeField] private GameObject _laserPrefab;
     private bool _canFire = false;
     private float _fireTime = -1f;
     private float _fireRate;
 
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _anim = GetComponent<Animator>();
+        _rigidBody2D = GetComponent<Rigidbody2D>();
+        _boxCollider2D = GetComponent<BoxCollider2D>();
+        _audioSource = GetComponent<AudioSource>();
+
         if(_player == null)
         {
             Debug.LogError("Player is NULL");
         }
-        _anim = GetComponent<Animator>();
+        
         if(_anim == null)
         {
             Debug.LogError("Animator is NULL");
         }
-        _rigidBody2D = GetComponent<Rigidbody2D>();
+        
         if(_rigidBody2D == null)
         {
             Debug.LogError("RigidBody is NULL");
         }
-        _boxCollider2D = GetComponent<BoxCollider2D>();
+        
         if(_boxCollider2D == null)
         {
             Debug.LogError("Box Collider is NULL");
         }
 
-        _audioSource = GetComponent<AudioSource>();
         if(_audioSource == null)
         {
             Debug.LogError("AudioSource on Enemy is NULL");
@@ -66,9 +65,6 @@ public class Enemy : MonoBehaviour
         {
             FireLaser();
         }
-        
-        
-
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -83,7 +79,6 @@ public class Enemy : MonoBehaviour
             }
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
-           // AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
            _audioSource.Play();
             
             Destroy(this.gameObject,2.5f);
@@ -99,7 +94,6 @@ public class Enemy : MonoBehaviour
             }
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
-            //AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
             _audioSource.Play();
             Destroy(this.gameObject,2.5f);
         }
@@ -121,10 +115,6 @@ public class Enemy : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0,-3,0), Quaternion.identity);
         }
-        _canFire = false;
-        
-        
-        
+        _canFire = false;       
     }
-    
 }
