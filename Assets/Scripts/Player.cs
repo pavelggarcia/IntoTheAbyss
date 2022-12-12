@@ -239,6 +239,12 @@ public class Player : MonoBehaviour
             
         }    
     }
+
+    public void AddToAmmo()
+    {
+        _laserShots = 15;
+        _UIManager.UpdateAmmoText(_laserShots);
+    }
     
 
 
