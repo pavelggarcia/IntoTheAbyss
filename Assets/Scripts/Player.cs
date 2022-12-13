@@ -135,7 +135,9 @@ public class Player : MonoBehaviour
 
         if (_isShieldActive == true)
         {
+            
             _shieldSprite = _shield.GetComponent<SpriteRenderer>();
+            
             _shieldDamage -= 1;
             if(_shieldDamage == 2)
             {
@@ -151,6 +153,8 @@ public class Player : MonoBehaviour
             {
                 _isShieldActive = false;
                 _shield.SetActive(false);
+                _shieldSprite.color = new Color(1,1,1);
+                _shieldDamage = 3;
                 return;
             }
             
