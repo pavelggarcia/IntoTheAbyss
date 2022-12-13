@@ -55,6 +55,9 @@ public class PowerUp : MonoBehaviour
                     case 3:
                         _player.AddToAmmo();
                         break;
+                    case 4:
+                        _player.AddToLife();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

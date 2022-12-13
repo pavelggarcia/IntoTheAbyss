@@ -245,6 +245,23 @@ public class Player : MonoBehaviour
         _laserShots = 15;
         _UIManager.UpdateAmmoText(_laserShots);
     }
+    public void AddToLife()
+    {
+        if(_lives < 3)
+        {
+            _lives += 1;
+            _UIManager.UpdateLives(_lives);
+            if(_lives == 3)
+            {
+                _rightEngine.SetActive(false);
+                _leftEngine.SetActive(false);
+            }
+            if(_lives == 2)
+            {
+                _leftEngine.SetActive(false);
+            }
+        }
+    }
     
 
 
