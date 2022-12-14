@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private SpriteRenderer _shieldSprite;
     private int _laserShots = 15;
+    [SerializeField] private GameObject _secondaryFire;
     
     
     
@@ -266,7 +267,16 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+    public void SecondaryFire()
+    {
+        _secondaryFire.SetActive(true);
+        StartCoroutine(SecondaryFireRoutine());
+    }
+    IEnumerator SecondaryFireRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _secondaryFire.SetActive(false);
+    }
 
 
 
