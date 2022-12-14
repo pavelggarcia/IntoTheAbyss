@@ -30,24 +30,32 @@ public class Player : MonoBehaviour
     private SpriteRenderer _shieldSprite;
     private int _laserShots = 15;
     [SerializeField] private GameObject _secondaryFire;
-    
-    
-    
+    [SerializeField] private GameObject _progressBar;
+    private ProgressBar _thrusterBar;
+    private float _xBar;
+
+
+
     void Start()
     {
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
-        
+        _thrusterBar = _progressBar.GetComponent<ProgressBar>();
+        //_xBar = _thrusterBar.GetXBar();
 
+        if (_thrusterBar == null)
+        {
+            Debug.LogError("Thruster Bar is NULL");
+        }
         if (_spawnManager == null)
         {
             Debug.LogError("The spawn manager is NULL.");
         }
 
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-        if(_gameManager == null)
+        if (_gameManager == null)
         {
             Debug.LogError("Game Manager is NULL");
         }
@@ -65,19 +73,22 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        _xBar = _thrusterBar.GetXBar();
+
         CalculateMovement();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            if(_laserShots >= 1)
+            if (_laserShots >= 1)
             {
                 _laserShots -= 1;
                 FireLaser();
                 _UIManager.UpdateAmmoText(_laserShots);
             }
-            
+
         }
-        
+
     }
     void FireLaser()
     {
@@ -90,26 +101,21 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
-        
+
         _audioSource.Play();
-        
+
     }
 
     void CalculateMovement()
     {
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            _speed = 10f;
-        }
-        if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _speed = 5f;
-        }
+        PlayerThruster();
+
         // THis code restricts the player movement in the Y axis
         if (transform.position.y >= 6)
         {
@@ -136,51 +142,51 @@ public class Player : MonoBehaviour
 
         if (_isShieldActive == true)
         {
-            
+
             _shieldSprite = _shield.GetComponent<SpriteRenderer>();
-            
+
             _shieldDamage -= 1;
-            if(_shieldDamage == 2)
+            if (_shieldDamage == 2)
             {
-                _shieldSprite.color = new Color(1,0.5f, 0.5f);
+                _shieldSprite.color = new Color(1, 0.5f, 0.5f);
                 return;
             }
-            if(_shieldDamage == 1)
+            if (_shieldDamage == 1)
             {
-                _shieldSprite.color = new Color(1,0,0);
+                _shieldSprite.color = new Color(1, 0, 0);
                 return;
             }
-            if(_shieldDamage == 0)
+            if (_shieldDamage == 0)
             {
                 _isShieldActive = false;
                 _shield.SetActive(false);
-                _shieldSprite.color = new Color(1,1,1);
+                _shieldSprite.color = new Color(1, 1, 1);
                 _shieldDamage = 3;
                 return;
             }
-            
-        
+
+
         }
 
-        
+
 
         _lives -= 1;
-        
-        if(_lives == 2)
+
+        if (_lives == 2)
         {
             _rightEngine.SetActive(true);
         }
-        else if(_lives == 1)
+        else if (_lives == 1)
         {
             _leftEngine.SetActive(true);
         }
-        
+
         _UIManager.UpdateLives(_lives);
 
         if (_lives < 1)
         {
             _spawnManager.onPlayerDeath();
-            
+
             _UIManager.GameOverText();
             _UIManager.RestartLevelText();
             _gameManager.GameOver();
@@ -189,7 +195,7 @@ public class Player : MonoBehaviour
     }
     public void TripleShotActive()
     {
-        _isTripleShotActive = true;        
+        _isTripleShotActive = true;
         StartCoroutine("TripleShotPowerDownRoutine");
     }
 
@@ -199,7 +205,7 @@ public class Player : MonoBehaviour
         //I want to have it so that when triple shot is called it starts a 5 second countdown timer(which will be the wait for seconds), if more triple shot is picked up, then the delay should be extended, once the 
         yield return new WaitForSeconds(_TripleShotTime);
         _isTripleShotActive = false;
-        
+
     }
     // Power up touches player, power up script calls triple shot active method, triple shot method starts triple shot corotuine which starts a 5 second timer
     // need to make it so that once the power up is collected, it adds 5 seconds to the TripleShotTime, Triple shot time should start at 0, and once powerup is collected it will add 5 seconds, if a second one is collected it will add another 5 seconds, once the time runs out, back to single laser. 
@@ -229,20 +235,20 @@ public class Player : MonoBehaviour
         _score += points;
         _UIManager.UpdateScore(_score);
     }
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "EnemyLaser")
+        if (other.tag == "EnemyLaser")
         {
-            if(_isShieldActive == true)
+            if (_isShieldActive == true)
             {
                 Destroy(other.gameObject);
-                
+
             }
             Damage();
             AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
             Destroy(other.gameObject);
-            
-        }    
+
+        }
     }
 
     public void AddToAmmo()
@@ -252,16 +258,16 @@ public class Player : MonoBehaviour
     }
     public void AddToLife()
     {
-        if(_lives < 3)
+        if (_lives < 3)
         {
             _lives += 1;
             _UIManager.UpdateLives(_lives);
-            if(_lives == 3)
+            if (_lives == 3)
             {
                 _rightEngine.SetActive(false);
                 _leftEngine.SetActive(false);
             }
-            if(_lives == 2)
+            if (_lives == 2)
             {
                 _leftEngine.SetActive(false);
             }
@@ -278,6 +284,28 @@ public class Player : MonoBehaviour
         _secondaryFire.SetActive(false);
     }
 
+    private void PlayerThruster()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && _xBar > .01f)
+        {
+            Debug.Log(_xBar);
+            _speed = 10f;
+            _thrusterBar.AddThruster();
+            if(_xBar <= 0)
+            {
+                return;
+            }
+        }
+        else
+        {
+            _speed = 5f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift) && _xBar < 1.2f)
+        {
+            _speed = 5f;
+            _thrusterBar.RemoveThruster();
+        }
+    }
 
 
 
