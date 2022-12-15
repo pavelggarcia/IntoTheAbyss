@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _progressBar;
     private ProgressBar _thrusterBar;
     private float _xBar;
+    [SerializeField] private GameObject _mainCamera;
+    private CameraShake _cameraShake;
 
 
 
@@ -44,6 +46,8 @@ public class Player : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _thrusterBar = _progressBar.GetComponent<ProgressBar>();
         //_xBar = _thrusterBar.GetXBar();
+        _cameraShake = _mainCamera.GetComponent<CameraShake>();
+        
 
         if (_thrusterBar == null)
         {
@@ -138,6 +142,7 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
+        _cameraShake.ItsShakinTime();
         // This code manages the Shield Damage and visualization
 
         if (_isShieldActive == true)

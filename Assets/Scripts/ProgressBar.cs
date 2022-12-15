@@ -22,6 +22,7 @@ public class ProgressBar : MonoBehaviour
             _xBar += 0.25f * Time.deltaTime;
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
         }
+        
     }
 
     public void AddThruster()
@@ -41,11 +42,7 @@ public class ProgressBar : MonoBehaviour
     }
     public void RemoveThruster()
     {
-
-
         _canDischarge = false;
-
-
     }
     public float GetXBar()
     {
