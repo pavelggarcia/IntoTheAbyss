@@ -7,11 +7,6 @@ public class CameraShake : MonoBehaviour
     [SerializeField] private float _shakeTime;
     private float _shakeLength;
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -26,12 +21,6 @@ public class CameraShake : MonoBehaviour
             transform.position = new Vector3(0, 0, -10);
             _shakeTime = 0;
         }
-    }
-    private void LateUpdate()
-    {
-
-
-
     }
     public void ItsShakinTime()
     {

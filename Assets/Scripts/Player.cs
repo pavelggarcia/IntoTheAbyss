@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
         //_xBar = _thrusterBar.GetXBar();
         _cameraShake = _mainCamera.GetComponent<CameraShake>();
         
+        if(_cameraShake == null)
+        {
+            Debug.LogError("CameraShake is NULL");
+        }
 
         if (_thrusterBar == null)
         {
