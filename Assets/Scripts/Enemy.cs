@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private bool _canFire = false;
     private float _fireTime = -1f;
     private float _fireRate;
+    private float _xOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
         _rigidBody2D = GetComponent<Rigidbody2D>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _audioSource = GetComponent<AudioSource>();
+        _xOffset = Random.Range(-.5f, .5f);
 
         if(_player == null)
         {
@@ -55,7 +57,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * _enemySpeed);
+        StartCoroutine(SwitchX()); 
+
+        transform.Translate((Vector3.down + new Vector3(_xOffset,0,0)) * Time.deltaTime * _enemySpeed);
         if (transform.position.y <= -6)
         {
             float randomX = Random.Range(-10.0f, 10.0f);
@@ -116,5 +120,18 @@ public class Enemy : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0,-3,0), Quaternion.identity);
         }
         _canFire = false;       
+    }
+    IEnumerator SwitchX()
+    {
+        if(_xOffset > 0)
+        {
+            yield return new WaitForSeconds(1);
+            _xOffset = -.5f;
+        }
+        if(_xOffset < 0)
+        {
+            yield return new WaitForSeconds(1);
+            _xOffset = .5f;
+        }
     }
 }

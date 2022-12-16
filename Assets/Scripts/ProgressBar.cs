@@ -31,7 +31,7 @@ public class ProgressBar : MonoBehaviour
         if (_xBar >= 0f && _canDischarge == true)
         {
 
-            _xBar -= .25f * Time.deltaTime;
+            _xBar -= .20f * Time.deltaTime;
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
             if (_xBar <= 0)
             {
