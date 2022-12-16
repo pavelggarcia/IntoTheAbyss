@@ -223,6 +223,7 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
         _speed *= _speedMultiplier;
+        Debug.Log(_speed);
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
     IEnumerator SpeedBoostPowerDownRoutine()
@@ -230,6 +231,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
 
         _speed /= _speedMultiplier;
+        Debug.Log(_speed);
     }
     public void ShieldsActive()
     {
@@ -292,12 +294,12 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _secondaryFire.SetActive(false);
     }
-
+    // Need to fix bug where if thruster is active and taken off it sets players speed to 5, but if speed power up is active as well, it resets the player speed to 2.5 instead of 5
     private void PlayerThruster()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && _xBar > .01f)
+        if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0.1f)
         {
-            Debug.Log(_xBar);
+            //Debug.Log(_xBar);
             _speed = 10f;
             _thrusterBar.AddThruster();
             if(_xBar <= 0)
@@ -305,10 +307,7 @@ public class Player : MonoBehaviour
                 return;
             }
         }
-        else
-        {
-            _speed = 5f;
-        }
+        
         if (Input.GetKeyUp(KeyCode.LeftShift) && _xBar < 1.2f)
         {
             _speed = 5f;

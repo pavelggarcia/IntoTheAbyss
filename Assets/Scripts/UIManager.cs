@@ -19,16 +19,11 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _gameOverText.enabled = false;
-        _restartLevelText.enabled = false;
-        
-        
+        _restartLevelText.enabled = false; 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-       
-    }
+    
     public void UpdateScore(int PlayerScore)
     {
         _scoreText.text = "Score: " + PlayerScore;
@@ -45,7 +40,7 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateAmmoText(int AmmoCount)
     {
-        _ammoText.text = "Ammo: " + AmmoCount;
+        _ammoText.text = AmmoCount + " / 15";
     }
 
     IEnumerator FlashGameOverRoutine()
