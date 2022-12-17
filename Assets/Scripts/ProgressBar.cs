@@ -10,16 +10,17 @@ public class ProgressBar : MonoBehaviour
     private bool _canDischarge = true;
 
     //Need to go over the math to figure out why xBar never gets to 0, just smaller and smaller numbers but never 0
-    public void Update()
+    private void Update()
     {
         if (_canDischarge == false && _xBar <= 1f)
         {
+            //Debug.Log(_xBar);
 
             if (_xBar > 1f)
             {
                 _xBar = 1f;
             }
-            _xBar += (0.25f * Time.deltaTime);
+            _xBar += (0.2f * Time.deltaTime);
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
         }
         
@@ -31,9 +32,9 @@ public class ProgressBar : MonoBehaviour
         if (_xBar >= 0f && _canDischarge == true)
         {
 
-            _xBar -= (.20f * Time.deltaTime);
+            _xBar -= (0.2f * Time.deltaTime);
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
-            if (_xBar <= 0)
+            if (_xBar <= 0.1f)
             {
                 _canDischarge = false;
                 return;
