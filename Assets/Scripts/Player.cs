@@ -299,11 +299,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0.1f)
         {
-            //Debug.Log(_xBar);
+            
             _speed = 10f;
             _thrusterBar.AddThruster();
-            if(_xBar <= 0)
+            if(_xBar <= 0.1f)
             {
+                _speed = 5f;
                 return;
             }
         }

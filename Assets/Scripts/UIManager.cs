@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private TMP_Text _restartLevelText;
     [SerializeField] private TMP_Text _ammoText;
+    [SerializeField]private TMP_Text _waveText;
     
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     {
         _gameOverText.enabled = false;
         _restartLevelText.enabled = false; 
+        _waveText.enabled = false;
     }
 
     // Update is called once per frame
@@ -57,6 +59,19 @@ public class UIManager : MonoBehaviour
     public void RestartLevelText()
     {
         _restartLevelText.enabled = true;
+        
+    }
+
+    public void GetShowWaveText(int wave)
+    {
+        StartCoroutine(ShowWaveText(wave));
+    }
+    IEnumerator ShowWaveText(int wave)
+    {
+        _waveText.enabled = true;
+        _waveText.text = "Wave " + wave;
+        yield return new WaitForSeconds(2);
+        _waveText.enabled = false;
         
     }
 }

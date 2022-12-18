@@ -16,13 +16,15 @@ public class ProgressBar : MonoBehaviour
         {
             //Debug.Log(_xBar);
 
-            if (_xBar > 1f)
+           
+            _xBar += (0.2f * Time.deltaTime);
+            _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
+             if (_xBar > 1f)
             {
                 _xBar = 1f;
             }
-            _xBar += (0.2f * Time.deltaTime);
-            _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
         }
+
         
     }
 
@@ -31,7 +33,6 @@ public class ProgressBar : MonoBehaviour
         _canDischarge = true;
         if (_xBar >= 0f && _canDischarge == true)
         {
-
             _xBar -= (0.2f * Time.deltaTime);
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
             if (_xBar <= 0.1f)
