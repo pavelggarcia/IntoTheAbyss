@@ -7,11 +7,6 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private int _rotateSpeed = 3;
     [SerializeField] private GameObject _explosionPrefab;
     private SpawnManager _spawnManager;
-    // challenge code
-    //[SerializeField] private AudioClip _explosionAudio;
-    
-
-
 
 
     void Start()
@@ -35,8 +30,6 @@ public class Asteroid : MonoBehaviour
         {
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
-            //  challege code
-            //AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
             _spawnManager.StartSpawning();
             Destroy(this.gameObject, 0.25f);
         }

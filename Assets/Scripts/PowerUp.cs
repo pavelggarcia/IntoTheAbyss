@@ -61,6 +61,9 @@ public class PowerUp : MonoBehaviour
                     case 5:
                         _player.SecondaryFire();
                         break;
+                    case 6:
+                        _player.Damage();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

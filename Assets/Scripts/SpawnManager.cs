@@ -10,7 +10,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _enemySpawnTime = 4.0f;
     private bool _stopSpawning = false;
     [SerializeField] private GameObject[] powerups;
-    //private int _enemyCounter;
     private WaveManager _waveManager;
     private void Start()
     {
@@ -29,7 +28,7 @@ public class SpawnManager : MonoBehaviour
         _waveManager.StartTheWaves();
     }
 
-    IEnumerator SpawnEnemyRoutine()
+   /*  IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false)
@@ -39,7 +38,7 @@ public class SpawnManager : MonoBehaviour
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(_enemySpawnTime);
         }
-    }
+    } */
     public void SpawnOneEnemy()
     {
         Vector3 posToSpawn = new Vector3(Random.Range(-10.0f, 10.0f), 8, 0);
@@ -55,7 +54,7 @@ public class SpawnManager : MonoBehaviour
         {
 
             Vector3 posToSpawn = new Vector3(Random.Range(-10.0f, 10.0f), 8, 0);
-            int randomPowerUp = Random.Range(0, 6);
+            int randomPowerUp = Random.Range(0, 7);
 
             Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
 

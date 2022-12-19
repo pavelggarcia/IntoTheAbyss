@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
         _thrusterBar = _progressBar.GetComponent<ProgressBar>();
-        //_xBar = _thrusterBar.GetXBar();
         _cameraShake = _mainCamera.GetComponent<CameraShake>();
         
         if(_cameraShake == null)
@@ -222,23 +221,18 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _speed *= _speedMultiplier;
-        Debug.Log(_speed);
+        _speed =10f;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-
-        _speed /= _speedMultiplier;
-        Debug.Log(_speed);
+        _speed =5f;
     }
     public void ShieldsActive()
     {
         _isShieldActive = true;
-
         _shield.SetActive(true);
-
     }
 
     public void AddToScore(int points)

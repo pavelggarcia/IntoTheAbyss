@@ -613,8 +613,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Score:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bf44f425791979e4aaf095068820b37a, type: 2}
+  m_sharedMaterial: {fileID: -853275856709627195, guid: bf44f425791979e4aaf095068820b37a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -638,8 +638,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1016,8 +1016,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 15 / 15
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bf44f425791979e4aaf095068820b37a, type: 2}
+  m_sharedMaterial: {fileID: -853275856709627195, guid: bf44f425791979e4aaf095068820b37a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1041,8 +1041,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1111,6 +1111,67 @@ RectTransform:
   m_AnchoredPosition: {x: -78.6, y: -90.00003}
   m_SizeDelta: {x: 67.429, y: 29.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &947170373
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 337603823528324305, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 12757dc751c1cb9479ea7b67323d1934, type: 2}
+    - target: {fileID: 2693264497841380790, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
 --- !u!1 &1013609483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,7 +1275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press 'R' to restart level
+  m_text: Press R to restart level
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf44f425791979e4aaf095068820b37a, type: 2}
   m_sharedMaterial: {fileID: -853275856709627195, guid: bf44f425791979e4aaf095068820b37a, type: 2}
@@ -1241,7 +1302,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.35
+  m_fontSize: 25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -10,7 +10,6 @@ public class WaveManager : MonoBehaviour
     private int _waveCounter;
     private SpawnManager _spawnManager;
     private bool _canSpawn = true;
-    //private int _maxWaves = 10;
     private float _enemyNumber = 10;
     private float _enemyMultiplier = 1.2f;
     private UIManager _uiManager;
