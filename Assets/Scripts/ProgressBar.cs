@@ -18,19 +18,24 @@ public class ProgressBar : MonoBehaviour
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
              if (_xBar > 1f)
             {
-                _xBar = 1f;
+                _xBar = 1.0f;
+                _canDischarge = true;
             }
         }
     }
 
     public void AddThruster()
     {
-        _canDischarge = true;
+        if(_xBar > 0.1f)
+        {
+            _canDischarge = true;
+        }
+        
         if (_xBar >= 0f && _canDischarge == true)
         {
             _xBar -= (0.2f * Time.deltaTime);
             _progressBar.GetComponent<RectTransform>().localScale = new Vector3(_xBar, 1, 1);
-            if (_xBar <= 0.1f)
+            if (_xBar <= 0f)
             {
                 _canDischarge = false;
                 return;

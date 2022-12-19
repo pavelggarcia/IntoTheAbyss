@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     private float _xBar;
     [SerializeField] private GameObject _mainCamera;
     private CameraShake _cameraShake;
+    private bool _canBoost = true;
 
 
 
@@ -46,8 +47,8 @@ public class Player : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _thrusterBar = _progressBar.GetComponent<ProgressBar>();
         _cameraShake = _mainCamera.GetComponent<CameraShake>();
-        
-        if(_cameraShake == null)
+
+        if (_cameraShake == null)
         {
             Debug.LogError("CameraShake is NULL");
         }
@@ -121,7 +122,11 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
 
+
+
         PlayerThruster();
+
+
 
         // THis code restricts the player movement in the Y axis
         if (transform.position.y >= 6)
@@ -221,13 +226,13 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _speed =10f;
+        _speed = 10f;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _speed =5f;
+        _speed = 5f;
     }
     public void ShieldsActive()
     {
@@ -291,22 +296,30 @@ public class Player : MonoBehaviour
     // Need to fix bug where if thruster is active and taken off it sets players speed to 5, but if speed power up is active as well, it resets the player speed to 2.5 instead of 5
     private void PlayerThruster()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0.1f)
+
+
+        if (_canBoost == true)
         {
-            
-            _speed = 10f;
-            _thrusterBar.AddThruster();
-            if(_xBar <= 0.1f)
+            if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0f)
             {
-                _speed = 5f;
-                return;
+
+                _speed = 10f;
+                _thrusterBar.AddThruster();
+                if (_xBar <= 0.01f)
+                {
+                    _speed = 5f;
+                    _canBoost = false;
+                }
             }
         }
-        
+
+
+
         if (Input.GetKeyUp(KeyCode.LeftShift) && _xBar < 1.2f)
         {
             _speed = 5f;
             _thrusterBar.RemoveThruster();
+            _canBoost = true;
         }
     }
 
