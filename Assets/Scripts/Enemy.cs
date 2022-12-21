@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     private float _fireTime = -1f;
     private float _fireRate;
     private float _xOffset;
+    private bool _isAlive = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,27 +29,28 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _xOffset = Random.Range(-.5f, .5f);
 
-        if(_player == null)
+
+        if (_player == null)
         {
             Debug.LogError("Player is NULL");
         }
-        
-        if(_anim == null)
+
+        if (_anim == null)
         {
             Debug.LogError("Animator is NULL");
         }
-        
-        if(_rigidBody2D == null)
+
+        if (_rigidBody2D == null)
         {
             Debug.LogError("RigidBody is NULL");
         }
-        
-        if(_boxCollider2D == null)
+
+        if (_boxCollider2D == null)
         {
             Debug.LogError("Box Collider is NULL");
         }
 
-        if(_audioSource == null)
+        if (_audioSource == null)
         {
             Debug.LogError("AudioSource on Enemy is NULL");
         }
@@ -57,78 +60,79 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(SwitchX()); 
+        StartCoroutine(SwitchX());
 
-        transform.Translate((Vector3.down + new Vector3(_xOffset,0,0)) * Time.deltaTime * _enemySpeed);
+        transform.Translate((Vector3.down + new Vector3(_xOffset, 0, 0)) * Time.deltaTime * _enemySpeed);
         if (transform.position.y <= -6)
         {
-            float randomX = Random.Range(-10.0f, 10.0f);
+            float randomX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(randomX, 8, 0);
         }
-        if(Time.time > _fireTime)
+        if (Time.time > _fireTime)
         {
             FireLaser();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
-        if(other.tag == "Player")
+
+        if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
-            if(player != null)
+            if (player != null)
             {
                 player.Damage();
             }
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
-           _audioSource.Play();
-            
-            Destroy(this.gameObject,2.5f);
+            _audioSource.Play();
+            _isAlive = false;
+            Destroy(this.gameObject, 2.5f);
         }
 
 
-        if(other.tag == "Laser")
+        if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
-            if(_player != null)
+            if (_player != null)
             {
                 _player.AddToScore(10);
             }
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
-            Destroy(this.gameObject,2.5f);
+            _isAlive = false;
+            Destroy(this.gameObject, 2.5f);
         }
     }
     private void RemoveComponents()
     {
         Destroy(_rigidBody2D);
         Destroy(_boxCollider2D);
-        
+
     }
     private void FireLaser()
 
     {
         _fireRate = Random.Range(3.0f, 7.1f);
         _fireTime = Time.time + _fireRate;
-        
+
         _canFire = true;
-        if(_canFire == true)
+        if (_canFire == true && _isAlive == true)
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(0,-3,0), Quaternion.identity);
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
         }
-        _canFire = false;       
+        _canFire = false;
     }
     IEnumerator SwitchX()
     {
-        if(_xOffset > 0)
+        if (_xOffset > 0)
         {
             yield return new WaitForSeconds(1);
             _xOffset = -.5f;
         }
-        if(_xOffset < 0)
+        if (_xOffset < 0)
         {
             yield return new WaitForSeconds(1);
             _xOffset = .5f;
