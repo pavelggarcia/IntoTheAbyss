@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     private float _fireRate;
     private float _xOffset;
     private bool _isAlive = true;
+    [SerializeField] private GameObject _shield;
+    private bool _isShieldActive = true;
 
 
     // Start is called before the first frame update
@@ -84,6 +86,13 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
+            if(_isShieldActive == true)
+            {
+                _shield.SetActive(false);
+                _isShieldActive = false;
+                
+                return;
+            }
             RemoveComponents();
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
@@ -94,6 +103,13 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Laser")
         {
+            if(_isShieldActive == true)
+            {
+                _shield.SetActive(false);
+                _isShieldActive = false;
+                Destroy(other.gameObject);
+                return;
+            }
             Destroy(other.gameObject);
             if (_player != null)
             {

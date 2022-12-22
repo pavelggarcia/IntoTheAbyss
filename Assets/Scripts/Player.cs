@@ -252,7 +252,6 @@ public class Player : MonoBehaviour
             if (_isShieldActive == true)
             {
                 Destroy(other.gameObject);
-
             }
             Damage();
             AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
