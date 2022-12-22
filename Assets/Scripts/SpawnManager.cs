@@ -28,9 +28,10 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         //StartCoroutine("SpawnEnemyRoutine");
-        StartCoroutine("SpawnPowerUpRoutine");
+        StartCoroutine(SpawnCommonPowerUpRoutine());
         _waveManager.StartTheWaves();
         StartCoroutine(SpawnEnemySatellites());
+        StartCoroutine(SpawnRarePowerUpRoutine());
     }
 
     /*  IEnumerator SpawnEnemyRoutine()
@@ -50,27 +51,39 @@ public class SpawnManager : MonoBehaviour
         GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
         newEnemy.transform.parent = _enemyContainer.transform;
     }
-
-    IEnumerator SpawnPowerUpRoutine()
+    IEnumerator SpawnRarePowerUpRoutine()
     {
-        yield return new WaitForSeconds(3.0f);
-
+        yield return new WaitForSeconds(30);
         while (_stopSpawning == false)
         {
-
             Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8, 0);
             int randomPowerUp = Random.Range(0, 7);
-
-            Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
-
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            if (randomPowerUp == 2 || randomPowerUp == 4)
+            {
+                Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
+                yield return new WaitForSeconds(Random.Range(15.0f, 30.0f));
+            }
         }
+    }
 
+    IEnumerator SpawnCommonPowerUpRoutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+        while (_stopSpawning == false)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8, 0);
+            int randomPowerUp = Random.Range(0, 7);
+            if (randomPowerUp != 2 && randomPowerUp != 4)
+            {
+                Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
+                yield return new WaitForSeconds(Random.Range(2.0f, 4.0f));
+            }
+        }
     }
     IEnumerator SpawnEnemySatellites()
     {
         yield return new WaitForSeconds(_satelliteSpawnTime);
-        _satelliteSpawnTime = Random.Range(10, 30);
+        _satelliteSpawnTime = Random.Range(30, 45);
         while (_stopSpawning == false)
         {
             GameObject newSatellite = Instantiate(_enemySatellitesPrefab, new Vector3(0, 8, 0), Quaternion.identity);
