@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     private bool _isAlive = true;
     [SerializeField] private GameObject _shield;
     private bool _isShieldActive = true;
-    [SerializeField] private GameObject _playerPos;
+    private GameObject _playerPos;
     private float _distanceToRam = 4f;
 
 
@@ -58,6 +58,11 @@ public class Enemy : MonoBehaviour
         if (_audioSource == null)
         {
             Debug.LogError("AudioSource on Enemy is NULL");
+        }
+
+        if(_playerPos == null)
+        {
+            Debug.LogError("Player Position is NULL");
         }
 
     }
