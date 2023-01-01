@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     private bool _isShieldActive = true;
     private GameObject _playerPos;
     private float _distanceToRam = 4f;
+    private float _angle;
+    private float _roationModifier = -90;
+    private bool _canFireBackwards = false;
 
 
     // Start is called before the first frame update
@@ -74,6 +77,18 @@ public class Enemy : MonoBehaviour
 
         transform.Translate((Vector3.down + new Vector3(_xOffset, 0, 0)) * Time.deltaTime * _enemySpeed);
         StartCoroutine(SwitchX());
+
+        Vector3 _vectorToTarget = _playerPos.transform.position - transform.position;
+        _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
+
+        if(transform.position.y < _playerPos.transform.position.y && gameObject.name == "Enemy3")
+        {
+            _canFireBackwards = true;
+        }
+        if(transform.position.y > _playerPos.transform.position.y && gameObject.name == "Enemy3")
+        {
+            _canFireBackwards = false;
+        }
 
        
 
@@ -155,9 +170,15 @@ public class Enemy : MonoBehaviour
         _fireTime = Time.time + _fireRate;
 
         _canFire = true;
-        if (_canFire == true && _isAlive == true)
+        if (_canFire == true && _isAlive == true && _canFireBackwards == false) 
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+        }
+        
+
+        if(gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
+        {
+            Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
         }
         _canFire = false;
     }

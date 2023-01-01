@@ -2666,6 +2666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 2693264497841380790, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+  _enemy3Prefab: {fileID: 7035931131379083343, guid: 47d759b97fc96b4418e0fa1c12d1b2e7, type: 3}
   _enemyContainer: {fileID: 55107475}
   _enemySpawnTime: 2
   powerups:
