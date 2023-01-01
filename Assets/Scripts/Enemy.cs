@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     private bool _isAlive = true;
     [SerializeField] private GameObject _shield;
     private bool _isShieldActive = true;
+    [SerializeField] private GameObject _playerPos;
+    private float _distanceToRam = 4f;
 
 
     // Start is called before the first frame update
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _audioSource = GetComponent<AudioSource>();
         _xOffset = Random.Range(-.5f, .5f);
+        _playerPos = GameObject.Find("Player");
 
 
         if (_player == null)
@@ -62,18 +65,30 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(SwitchX());
+        
 
         transform.Translate((Vector3.down + new Vector3(_xOffset, 0, 0)) * Time.deltaTime * _enemySpeed);
-        if (transform.position.y <= -6)
+        StartCoroutine(SwitchX());
+
+       
+
+        if(Vector2.Distance(transform.position, _playerPos.transform.position) < _distanceToRam && (transform.position.y > _playerPos.transform.position.y))
         {
-            float randomX = Random.Range(-9.0f, 9.0f);
-            transform.position = new Vector3(randomX, 8, 0);
+            transform.position = Vector2.MoveTowards(transform.position, _playerPos.transform.position, _enemySpeed *Time.deltaTime);
+        }
+        
+        
+        if (transform.position.y <= -13)
+        {
+            float randomX = Random.Range(-18.0f, 18.0f);
+            transform.position = new Vector3(randomX, 13, 0);
         }
         if (Time.time > _fireTime)
         {
             FireLaser();
         }
+        
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)

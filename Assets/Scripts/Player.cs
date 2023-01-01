@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
     private SpriteRenderer _shieldSprite;
-    private int _laserShots = 15;
+    private int _laserShots = 100;
     [SerializeField] private GameObject _secondaryFire;
     [SerializeField] private GameObject _progressBar;
     private ProgressBar _thrusterBar;
@@ -129,23 +129,23 @@ public class Player : MonoBehaviour
 
 
         // THis code restricts the player movement in the Y axis
-        if (transform.position.y >= 6)
+        if (transform.position.y >= 10)
         {
-            transform.position = new Vector3(transform.position.x, 6, 0);
+            transform.position = new Vector3(transform.position.x, 10, 0);
         }
-        else if (transform.position.y <= -4)
+        else if (transform.position.y <= -10)
         {
-            transform.position = new Vector3(transform.position.x, -4, 0);
+            transform.position = new Vector3(transform.position.x, -10, 0);
         }
 
         // This code makes it so that the player wraps around when going off screen in the X axis
-        if (transform.position.x >= 10.5f)
+        if (transform.position.x >= 20.5f)
         {
-            transform.position = new Vector3(-10.5f, transform.position.y, 0);
+            transform.position = new Vector3(-20.5f, transform.position.y, 0);
         }
-        else if (transform.position.x <= -10.5f)
+        else if (transform.position.x <= -20.5f)
         {
-            transform.position = new Vector3(10.5f, transform.position.y, 0);
+            transform.position = new Vector3(20.5f, transform.position.y, 0);
         }
     }
     public void Damage()
@@ -226,13 +226,13 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _speed = 10f;
+        _speed = 15f;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _speed = 5f;
+        _speed = 10f;
     }
     public void ShieldsActive()
     {
@@ -262,7 +262,7 @@ public class Player : MonoBehaviour
 
     public void AddToAmmo()
     {
-        _laserShots = 15;
+        _laserShots = 100;
         _UIManager.UpdateAmmoText(_laserShots);
     }
     public void AddToLife()
@@ -302,11 +302,11 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0f)
             {
 
-                _speed = 10f;
+                _speed = 15f;
                 _thrusterBar.AddThruster();
                 if (_xBar <= 0.01f)
                 {
-                    _speed = 5f;
+                    _speed = 10f;
                     _canBoost = false;
                 }
             }

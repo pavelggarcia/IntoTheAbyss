@@ -18,7 +18,7 @@ public class CameraShake : MonoBehaviour
         }
         if (Time.time > _shakeLength)
         {
-            transform.position = new Vector3(0, 0, -10);
+            transform.position = new Vector3(0, 0, -20);
             _shakeTime = 0;
         }
     }

@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateAmmoText(int AmmoCount)
     {
-        _ammoText.text = AmmoCount + " / 15";
+        _ammoText.text = AmmoCount + " / 100";
     }
 
     IEnumerator FlashGameOverRoutine()

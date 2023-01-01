@@ -35,7 +35,7 @@ public class GreenEnemy : MonoBehaviour
         {
             FireLaser();
         }
-        if(transform.position.y <-6)
+        if(transform.position.y <-13)
         {
             Destroy(gameObject);
         }

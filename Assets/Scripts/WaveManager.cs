@@ -39,6 +39,7 @@ public class WaveManager : MonoBehaviour
     {
         _enemyCounter = _enemyContainer.transform.childCount;
         
+        
     }
 
     public void StartTheWaves()

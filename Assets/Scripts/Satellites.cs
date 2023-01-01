@@ -11,7 +11,7 @@ public class Satellites : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.down *Time.deltaTime *_satelliteSpeed);
-        if(transform.position.y < -6)
+        if(transform.position.y < -13)
         {
             Destroy(gameObject);
         }

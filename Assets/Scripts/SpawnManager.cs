@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour
      } */
     public void SpawnOneEnemy()
     {
-        Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8, 0);
+        Vector3 posToSpawn = new Vector3(Random.Range(-18.0f, 18.0f), 13, 0);
         GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
         newEnemy.transform.parent = _enemyContainer.transform;
     }
@@ -56,7 +56,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(30);
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-18.0f, 18.0f), 13, 0);
             int randomPowerUp = Random.Range(0, 7);
             if (randomPowerUp == 2 || randomPowerUp == 4)
             {
@@ -71,7 +71,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-18.0f, 18.0f), 13, 0);
             int randomPowerUp = Random.Range(0, 7);
             if (randomPowerUp != 2 && randomPowerUp != 4)
             {
@@ -86,7 +86,7 @@ public class SpawnManager : MonoBehaviour
         _satelliteSpawnTime = Random.Range(30, 45);
         while (_stopSpawning == false)
         {
-            GameObject newSatellite = Instantiate(_enemySatellitesPrefab, new Vector3(0, 8, 0), Quaternion.identity);
+            GameObject newSatellite = Instantiate(_enemySatellitesPrefab, new Vector3(0, 13, 0), Quaternion.identity);
             newSatellite.transform.parent = _satelliteContainer.transform;
             yield return new WaitForSeconds(_satelliteSpawnTime);
         }

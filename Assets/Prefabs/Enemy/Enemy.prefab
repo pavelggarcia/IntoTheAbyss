@@ -53,6 +53,7 @@ MonoBehaviour:
   _enemySpeed: 4
   _laserPrefab: {fileID: 3276123499420369581, guid: cdb60d1fa33fc604393917674d85b38c, type: 3}
   _shield: {fileID: 3926464282785097364}
+  _playerPos: {fileID: 0}
 --- !u!212 &2158167235564970572
 SpriteRenderer:
   m_ObjectHideFlags: 0
