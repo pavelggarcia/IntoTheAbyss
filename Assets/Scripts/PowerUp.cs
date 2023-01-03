@@ -32,6 +32,11 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.tag == "EnemyLaser")
+        {
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
         if (other.tag == "Player")
         {
             if (_player != null)

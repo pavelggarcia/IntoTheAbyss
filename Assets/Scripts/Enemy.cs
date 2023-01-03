@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private Rigidbody2D _rigidBody2D;
     private BoxCollider2D _boxCollider2D;
-    //[SerializeField] private AudioClip _explosionAudio;
     private AudioSource _audioSource;
     [SerializeField] private GameObject _laserPrefab;
     private bool _canFire = false;
@@ -24,6 +23,7 @@ public class Enemy : MonoBehaviour
     private float _angle;
     private float _roationModifier = -90;
     private bool _canFireBackwards = false;
+    private bool _rayCastFoundPowerUp = true;
 
 
     // Start is called before the first frame update
@@ -70,11 +70,8 @@ public class Enemy : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
         transform.Translate((Vector3.down + new Vector3(_xOffset, 0, 0)) * Time.deltaTime * _enemySpeed);
         StartCoroutine(SwitchX());
 
@@ -107,8 +104,7 @@ public class Enemy : MonoBehaviour
         {
             FireLaser();
         }
-        
-        
+        StartCoroutine(FireRayCast());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -151,6 +147,7 @@ public class Enemy : MonoBehaviour
                 _player.AddToScore(10);
             }
             RemoveComponents();
+            
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
             _isAlive = false;
@@ -159,6 +156,7 @@ public class Enemy : MonoBehaviour
     }
     private void RemoveComponents()
     {
+        _canFire = false;
         Destroy(_rigidBody2D);
         Destroy(_boxCollider2D);
 
@@ -166,18 +164,20 @@ public class Enemy : MonoBehaviour
     private void FireLaser()
 
     {
-        _fireRate = Random.Range(3.0f, 7.1f);
+        
         _fireTime = Time.time + _fireRate;
 
         _canFire = true;
         if (_canFire == true && _isAlive == true && _canFireBackwards == false) 
         {
+            _fireRate = Random.Range(3f, 5f);
             Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
         }
         
 
         if(gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
         {
+            _fireRate = Random.Range(1f, 2f);
             Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
         }
         _canFire = false;
@@ -194,5 +194,21 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(1);
             _xOffset = .5f;
         }
+    }
+
+    IEnumerator FireRayCast()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0,-2,0), -Vector2.up);
+        if(hit.collider != null)
+        {
+            if(hit.collider.tag == "PowerUp" && _rayCastFoundPowerUp == true)
+            {
+                _rayCastFoundPowerUp = false;
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+                yield return new WaitForSeconds(1);
+                _rayCastFoundPowerUp = true;
+            }
+        }
+        yield return new WaitForSeconds(0.5f);
     }
 }

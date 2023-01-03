@@ -256,7 +256,6 @@ public class Player : MonoBehaviour
             Damage();
             AudioSource.PlayClipAtPoint(_explosionAudio, transform.position);
             Destroy(other.gameObject);
-
         }
     }
 
@@ -292,11 +291,9 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _secondaryFire.SetActive(false);
     }
-    // Need to fix bug where if thruster is active and taken off it sets players speed to 5, but if speed power up is active as well, it resets the player speed to 2.5 instead of 5
+    
     private void PlayerThruster()
     {
-
-
         if (_canBoost == true)
         {
             if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0f)
@@ -312,8 +309,6 @@ public class Player : MonoBehaviour
             }
         }
 
-
-
         if (Input.GetKeyUp(KeyCode.LeftShift) && _xBar < 1.2f)
         {
             _speed = 5f;
@@ -321,9 +316,4 @@ public class Player : MonoBehaviour
             _canBoost = true;
         }
     }
-
-
-
-
-
 }
