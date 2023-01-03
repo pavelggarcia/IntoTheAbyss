@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _mainCamera;
     private CameraShake _cameraShake;
     private bool _canBoost = true;
+    private GameObject[] _powerUp;
 
 
 
@@ -93,6 +94,18 @@ public class Player : MonoBehaviour
                 _laserShots -= 1;
                 FireLaser();
                 _UIManager.UpdateAmmoText(_laserShots);
+            }
+
+        }
+        if (Input.GetKey(KeyCode.C))
+        {
+            _powerUp = GameObject.FindGameObjectsWithTag("PowerUp");
+            if (_powerUp != null)
+            {
+                foreach (GameObject p in _powerUp)
+                {
+                    p.GetComponent<PowerUp>().MoveTowardsPlayer();
+                }
             }
 
         }
@@ -291,7 +304,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _secondaryFire.SetActive(false);
     }
-    
+
     private void PlayerThruster()
     {
         if (_canBoost == true)

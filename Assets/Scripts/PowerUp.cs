@@ -9,6 +9,8 @@ public class PowerUp : MonoBehaviour
     [SerializeField] private AudioClip _powerupAudio;
 
     [SerializeField] private int powerupID;
+    private GameObject _playerTransform;
+    private Vector3 _playerPos;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,7 @@ public class PowerUp : MonoBehaviour
         {
             Debug.LogError("Player is NULL");
         }
+        _playerTransform = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -28,6 +31,11 @@ public class PowerUp : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        _playerPos = _playerTransform.transform.position;
+    }
+    public void MoveTowardsPlayer()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _playerPos, _powerUpSpeed *3*Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
