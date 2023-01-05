@@ -12,7 +12,7 @@ public class GreenEnemy : MonoBehaviour
     private float _fireRate;
     private float _fireTime = -1;
     private Player _player;
-    
+
 
 
     // Start is called before the first frame update
@@ -25,21 +25,26 @@ public class GreenEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 _vectorToTarget = _playerPos.position - transform.position;
-        _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
-        Quaternion q = Quaternion.AngleAxis(_angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * _speed);
+        if (transform != null && _playerPos != null)
+        {
+            Vector3 _vectorToTarget = _playerPos.position - transform.position;
+            _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
+            Quaternion q = Quaternion.AngleAxis(_angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * _speed);
+        }
+
+
 
 
         if (Time.time > _fireTime)
         {
             FireLaser();
         }
-        if(transform.position.y <-13)
+        if (transform.position.y < -13)
         {
             Destroy(gameObject);
         }
-        
+
     }
 
     private void FireLaser()

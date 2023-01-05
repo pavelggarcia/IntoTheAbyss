@@ -31,7 +31,11 @@ public class PowerUp : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        _playerPos = _playerTransform.transform.position;
+        if(_playerTransform != null)
+        {
+            _playerPos = _playerTransform.transform.position;
+        }
+        //_playerPos = _playerTransform.transform.position;
     }
     public void MoveTowardsPlayer()
     {

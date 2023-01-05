@@ -387,6 +387,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &164231403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2693264497841380790, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+  m_PrefabInstance: {fileID: 441493331}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &278389029
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +589,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progressBar: {fileID: 415413163}
+--- !u!1001 &441493331
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2693264497841380790, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466212894807121686, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
 --- !u!1 &478231973
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +985,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &797008104 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3618365974647051607, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
+  m_PrefabInstance: {fileID: 441493331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &797008106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797008104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2c36cf4092b8649aafbbed3be1c519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyShip: {fileID: 164231403}
 --- !u!1 &843173090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,7 +2748,6 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 2693264497841380790, guid: 3f0dc786c019ca0418d3e4c726de75d7, type: 3}
   _enemy3Prefab: {fileID: 7035931131379083343, guid: 47d759b97fc96b4418e0fa1c12d1b2e7, type: 3}
   _enemyContainer: {fileID: 55107475}
-  _enemySpawnTime: 2
   powerups:
   - {fileID: 2804169281616345131, guid: 263c19c2145846f46bae0c17680c26e5, type: 3}
   - {fileID: 8419533275703621565, guid: 967f09c07d3001d4e8e2b206c58e6b67, type: 3}

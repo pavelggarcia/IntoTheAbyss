@@ -6,7 +6,7 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
-    private float _speedMultiplier = 2f;
+    //private float _speedMultiplier = 2f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private float _fireRate = 0.5f;

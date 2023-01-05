@@ -23,7 +23,10 @@ public class Enemy : MonoBehaviour
     private float _angle;
     private float _roationModifier = -90;
     private bool _canFireBackwards = false;
-    private bool _rayCastFoundPowerUp = true;
+    //private bool _rayCastFoundPowerUp = true;
+    private bool _canDodge = true;
+    //private int _xDodge;
+    //private Vector3 _newDodgePos;
 
 
     // Start is called before the first frame update
@@ -63,11 +66,11 @@ public class Enemy : MonoBehaviour
             Debug.LogError("AudioSource on Enemy is NULL");
         }
 
-        if(_playerPos == null)
+        if (_playerPos == null)
         {
             Debug.LogError("Player Position is NULL");
         }
-
+        //StartCoroutine(FireRayCast());
     }
 
     void Update()
@@ -75,26 +78,34 @@ public class Enemy : MonoBehaviour
         transform.Translate((Vector3.down + new Vector3(_xOffset, 0, 0)) * Time.deltaTime * _enemySpeed);
         StartCoroutine(SwitchX());
 
-        Vector3 _vectorToTarget = _playerPos.transform.position - transform.position;
-        _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
-
-        if(transform.position.y < _playerPos.transform.position.y && gameObject.name == "Enemy3")
+        /* if (_canDodge == true)
         {
-            _canFireBackwards = true;
-        }
-        if(transform.position.y > _playerPos.transform.position.y && gameObject.name == "Enemy3")
+            transform.position = Vector2.MoveTowards(transform.position, _newDodgePos, _enemySpeed * 3 * Time.deltaTime);
+        } */
+
+
+        if (transform != null && _playerPos != null)
         {
-            _canFireBackwards = false;
+            Vector3 _vectorToTarget = _playerPos.transform.position - transform.position;
+            _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
+
+            if (transform.position.y < _playerPos.transform.position.y && gameObject.name == "Enemy3")
+            {
+                _canFireBackwards = true;
+            }
+            if (transform.position.y > _playerPos.transform.position.y && gameObject.name == "Enemy3")
+            {
+                _canFireBackwards = false;
+            }
+
+            if (Vector2.Distance(transform.position, _playerPos.transform.position) < _distanceToRam && (transform.position.y > _playerPos.transform.position.y))
+            {
+                transform.position = Vector2.MoveTowards(transform.position, _playerPos.transform.position, _enemySpeed * Time.deltaTime);
+            }
+
         }
 
-       
 
-        if(Vector2.Distance(transform.position, _playerPos.transform.position) < _distanceToRam && (transform.position.y > _playerPos.transform.position.y))
-        {
-            transform.position = Vector2.MoveTowards(transform.position, _playerPos.transform.position, _enemySpeed *Time.deltaTime);
-        }
-        
-        
         if (transform.position.y <= -13)
         {
             float randomX = Random.Range(-18.0f, 18.0f);
@@ -104,7 +115,7 @@ public class Enemy : MonoBehaviour
         {
             FireLaser();
         }
-        StartCoroutine(FireRayCast());
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -117,11 +128,11 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            if(_isShieldActive == true)
+            if (_isShieldActive == true)
             {
                 _shield.SetActive(false);
                 _isShieldActive = false;
-                
+
                 return;
             }
             RemoveComponents();
@@ -134,7 +145,7 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Laser")
         {
-            if(_isShieldActive == true)
+            if (_isShieldActive == true)
             {
                 _shield.SetActive(false);
                 _isShieldActive = false;
@@ -147,13 +158,15 @@ public class Enemy : MonoBehaviour
                 _player.AddToScore(10);
             }
             RemoveComponents();
-            
+
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
             _isAlive = false;
             Destroy(this.gameObject, 2.5f);
         }
     }
+
+    // This code is for after the enemy is destroyed, so that the enemy can't fire after being destoryed
     private void RemoveComponents()
     {
         _canFire = false;
@@ -164,18 +177,16 @@ public class Enemy : MonoBehaviour
     private void FireLaser()
 
     {
-        
         _fireTime = Time.time + _fireRate;
-
         _canFire = true;
-        if (_canFire == true && _isAlive == true && _canFireBackwards == false) 
+        // This code checks to see if the enemy is a normal enemy and can only fire downwards
+        if (_canFire == true && _isAlive == true && _canFireBackwards == false)
         {
             _fireRate = Random.Range(3f, 5f);
             Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
         }
-        
-
-        if(gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
+        // This code checks to see if this enemy can fire backwards 
+        if (gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
         {
             _fireRate = Random.Range(1f, 2f);
             Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
@@ -196,19 +207,57 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator FireRayCast()
+    public void EnemyDodge()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0,-2,0), -Vector2.up);
-        if(hit.collider != null)
-        {
-            if(hit.collider.tag == "PowerUp" && _rayCastFoundPowerUp == true)
-            {
-                _rayCastFoundPowerUp = false;
-                Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
-                yield return new WaitForSeconds(1);
-                _rayCastFoundPowerUp = true;
-            }
-        }
-        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(EnemyDodgeRoutine());
     }
+    IEnumerator EnemyDodgeRoutine()
+    {
+        
+        int XPos = Random.Range(2,3);
+        Vector3 NewPos = transform.position + new Vector3(XPos, 0.5f, 0);
+        if(_canDodge == true)
+        {
+            _canDodge = false;
+            transform.position = Vector2.MoveTowards(transform.position, NewPos, _enemySpeed * 30* Time.deltaTime);
+            yield return new WaitForSeconds(1);
+            _canDodge = true;
+        }
+        
+    }
+    public void FireOnPowerUp()
+    {
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+    }
+
+    /*  IEnumerator FireRayCast()
+     {
+         while (true)
+         {
+             RaycastHit2D hit = Physics2D.CircleCast(transform.position + new Vector3(0, -2, 0), 3f, Vector2.down, 10f);
+             if (hit.transform != null)
+             {
+                 if (hit.transform.tag == "PowerUp" && _rayCastFoundPowerUp == true)
+                 {
+                     Debug.Log(hit.transform.name);
+                     _rayCastFoundPowerUp = false;
+                     Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+                     yield return new WaitForSeconds(1f);
+                     _rayCastFoundPowerUp = true;
+                 }
+                 if (hit.transform.tag == "Laser" )
+                 {
+
+                     _canDodge = true;
+                     _xDodge = Random.Range(-2, 3);
+                     int _yDodge = Random.Range(-2,3);
+                     _newDodgePos = transform.position + new Vector3(_xDodge, _yDodge, 0);
+                     yield return new WaitForSeconds(.7f);
+                     _canDodge = false;
+                 }
+             }
+             yield return new WaitForSeconds(.2f);
+         }
+
+     } */
 }
