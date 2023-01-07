@@ -18,7 +18,6 @@ public class PhotonTorpedoe : MonoBehaviour
         } else
         {
             transform.Translate(Vector3.up *_movementSpeed *Time.deltaTime);
-
         }
         
         if(transform.position.y > 13 || transform.position.y < -13)
