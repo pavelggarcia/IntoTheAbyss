@@ -41,10 +41,8 @@ public class SpawnManager : MonoBehaviour
     public void SpawnOneEnemy()
     {
         _enemyPicker = Random.Range(1,3);
-        
-        Debug.Log(_enemyPicker);
-
         Vector3 posToSpawn = new Vector3(Random.Range(-18.0f, 18.0f), 13, 0);
+        
         if(_enemyPicker == 1)
         {
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
@@ -62,8 +60,8 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-18.0f, 18.0f), 13, 0);
-            int randomPowerUp = Random.Range(0, 7);
-            if (randomPowerUp == 2 || randomPowerUp == 4)
+            int randomPowerUp = Random.Range(0, 8);
+            if (randomPowerUp == 2 || randomPowerUp == 4 || randomPowerUp == 7)
             {
                 Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
                 yield return new WaitForSeconds(Random.Range(15.0f, 30.0f));
@@ -77,8 +75,8 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-18.0f, 18.0f), 13, 0);
-            int randomPowerUp = Random.Range(0, 7);
-            if (randomPowerUp != 2 && randomPowerUp != 4)
+            int randomPowerUp = Random.Range(0, 8);
+            if (randomPowerUp != 2 && randomPowerUp != 4 && randomPowerUp != 7)
             {
                 Instantiate(powerups[randomPowerUp], posToSpawn, Quaternion.identity);
                 yield return new WaitForSeconds(Random.Range(2.0f, 4.0f));

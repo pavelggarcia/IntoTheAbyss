@@ -5,7 +5,7 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _speed = 10f;
     //private float _speedMultiplier = 2f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private SpriteRenderer _shieldSprite;
     private int _laserShots = 100;
+    private int _torpedoeShots = 10;
     [SerializeField] private GameObject _secondaryFire;
     [SerializeField] private GameObject _progressBar;
     private ProgressBar _thrusterBar;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     private CameraShake _cameraShake;
     private bool _canBoost = true;
     private GameObject[] _powerUp;
+    [SerializeField] private GameObject _torpedoePrefab;
 
 
 
@@ -108,6 +110,16 @@ public class Player : MonoBehaviour
                 }
             }
 
+        }
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            if(_torpedoeShots >= 1)
+            {
+                _torpedoeShots -= 1;
+                Instantiate(_torpedoePrefab, transform.position +new Vector3(0,1,0), Quaternion.identity);
+                _UIManager.UpdateTorpedoeText(_torpedoeShots);
+            }
+            
         }
 
     }
@@ -277,6 +289,12 @@ public class Player : MonoBehaviour
         _laserShots = 100;
         _UIManager.UpdateAmmoText(_laserShots);
     }
+
+    public void AddToTorpedoeAmmo()
+    {
+        _torpedoeShots = 10;
+        _UIManager.UpdateTorpedoeText(_torpedoeShots);
+    }
     public void AddToLife()
     {
         if (_lives < 3)
@@ -304,7 +322,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _secondaryFire.SetActive(false);
     }
-
+    // need to fix bug where if thruster is added, the speed power up is taken away
     private void PlayerThruster()
     {
         if (_canBoost == true)
@@ -324,7 +342,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.LeftShift) && _xBar < 1.2f)
         {
-            _speed = 5f;
+            _speed = 10f;
             _thrusterBar.RemoveThruster();
             _canBoost = true;
         }

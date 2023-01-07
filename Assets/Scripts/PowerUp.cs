@@ -81,6 +81,9 @@ public class PowerUp : MonoBehaviour
                     case 6:
                         _player.Damage();
                         break;
+                    case 7:
+                        _player.AddToTorpedoeAmmo();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

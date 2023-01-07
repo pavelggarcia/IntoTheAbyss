@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartLevelText;
     [SerializeField] private TMP_Text _ammoText;
     [SerializeField]private TMP_Text _waveText;
+    [SerializeField] private TMP_Text _torpedoeText;
     
 
     // Start is called before the first frame update
@@ -43,6 +44,11 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmoText(int AmmoCount)
     {
         _ammoText.text = AmmoCount + " / 100";
+    }
+
+    public void UpdateTorpedoeText ( int TorpedoeCount)
+    {
+        _torpedoeText.text = TorpedoeCount + " / 10";
     }
 
     IEnumerator FlashGameOverRoutine()

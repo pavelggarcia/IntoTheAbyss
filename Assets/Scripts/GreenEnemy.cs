@@ -74,7 +74,7 @@ public class GreenEnemy : MonoBehaviour
         }
 
 
-        if (other.tag == "Laser")
+        if (other.tag == "Laser"|| other.tag == "Torpedoe")
         {
             Destroy(other.gameObject);
             if (_player != null)

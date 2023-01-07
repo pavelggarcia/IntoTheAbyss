@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLaser : MonoBehaviour
+public class EnemyTorpedoe : MonoBehaviour
 {
-
-    private int _speed = 8;
+    private int _speed = 10;
 
 
     // Update is called once per frame

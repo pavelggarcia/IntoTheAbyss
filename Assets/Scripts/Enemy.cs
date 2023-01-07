@@ -23,10 +23,8 @@ public class Enemy : MonoBehaviour
     private float _angle;
     private float _roationModifier = -90;
     private bool _canFireBackwards = false;
-    //private bool _rayCastFoundPowerUp = true;
     private bool _canDodge = true;
-    //private int _xDodge;
-    //private Vector3 _newDodgePos;
+    private int XPos;
 
 
     // Start is called before the first frame update
@@ -70,7 +68,6 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Player Position is NULL");
         }
-        //StartCoroutine(FireRayCast());
     }
 
     void Update()
@@ -78,10 +75,14 @@ public class Enemy : MonoBehaviour
         transform.Translate((Vector3.down + new Vector3(_xOffset, 0, 0)) * Time.deltaTime * _enemySpeed);
         StartCoroutine(SwitchX());
 
-        /* if (_canDodge == true)
+        if(transform.position.x > 18)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _newDodgePos, _enemySpeed * 3 * Time.deltaTime);
-        } */
+            transform.position = new Vector3(18, transform.position.y, 0);
+        }
+        if(transform.position.x < -18)
+        {
+            transform.position = new Vector3(-18, transform.position.y, 0);
+        }
 
 
         if (transform != null && _playerPos != null)
@@ -143,7 +144,7 @@ public class Enemy : MonoBehaviour
         }
 
 
-        if (other.tag == "Laser")
+        if (other.tag == "Laser" || other.tag == "Torpedoe")
         {
             if (_isShieldActive == true)
             {
@@ -213,8 +214,17 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator EnemyDodgeRoutine()
     {
+        int DodgePicker = Random.Range(1,3);
         
-        int XPos = Random.Range(2,3);
+        if(DodgePicker == 1)
+        {
+            XPos = 3;
+        }
+        else if(DodgePicker ==2)
+        {
+            XPos = -3;
+        }
+        
         Vector3 NewPos = transform.position + new Vector3(XPos, 0.5f, 0);
         if(_canDodge == true)
         {
@@ -230,34 +240,4 @@ public class Enemy : MonoBehaviour
         Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
     }
 
-    /*  IEnumerator FireRayCast()
-     {
-         while (true)
-         {
-             RaycastHit2D hit = Physics2D.CircleCast(transform.position + new Vector3(0, -2, 0), 3f, Vector2.down, 10f);
-             if (hit.transform != null)
-             {
-                 if (hit.transform.tag == "PowerUp" && _rayCastFoundPowerUp == true)
-                 {
-                     Debug.Log(hit.transform.name);
-                     _rayCastFoundPowerUp = false;
-                     Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
-                     yield return new WaitForSeconds(1f);
-                     _rayCastFoundPowerUp = true;
-                 }
-                 if (hit.transform.tag == "Laser" )
-                 {
-
-                     _canDodge = true;
-                     _xDodge = Random.Range(-2, 3);
-                     int _yDodge = Random.Range(-2,3);
-                     _newDodgePos = transform.position + new Vector3(_xDodge, _yDodge, 0);
-                     yield return new WaitForSeconds(.7f);
-                     _canDodge = false;
-                 }
-             }
-             yield return new WaitForSeconds(.2f);
-         }
-
-     } */
 }
