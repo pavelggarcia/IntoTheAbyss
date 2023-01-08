@@ -170,6 +170,7 @@ public class Enemy : MonoBehaviour
     // This code is for after the enemy is destroyed, so that the enemy can't fire after being destoryed
     private void RemoveComponents()
     {
+        _fireRate = Time.time * 100;
         _canFire = false;
         Destroy(_rigidBody2D);
         Destroy(_boxCollider2D);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5883283013927710371}
   - component: {fileID: 781923416772107664}
   - component: {fileID: 4926953523216622836}
+  - component: {fileID: 1892521431127806505}
   m_Layer: 0
   m_Name: PhotonTorpedoe
   m_TagString: Torpedoe
@@ -136,3 +137,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ad5d981bf6687479e97d30ec65a527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1892521431127806505
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397726722093680181}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9799e49726061c543bff636b0dd95f9b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

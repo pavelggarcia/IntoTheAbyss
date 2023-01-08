@@ -81,10 +81,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-
         _xBar = _thrusterBar.GetXBar();
 
         CalculateMovement();
@@ -146,12 +145,7 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
-
-
-
         PlayerThruster();
-
-
 
         // THis code restricts the player movement in the Y axis
         if (transform.position.y >= 10)
@@ -202,14 +196,10 @@ public class Player : MonoBehaviour
                 _shieldDamage = 3;
                 return;
             }
-
-
         }
 
-
-
+        // This code deals with taking the players lives away
         _lives -= 1;
-
         if (_lives == 2)
         {
             _rightEngine.SetActive(true);
@@ -218,13 +208,10 @@ public class Player : MonoBehaviour
         {
             _leftEngine.SetActive(true);
         }
-
         _UIManager.UpdateLives(_lives);
-
         if (_lives < 1)
         {
             _spawnManager.onPlayerDeath();
-
             _UIManager.GameOverText();
             _UIManager.RestartLevelText();
             _gameManager.GameOver();
