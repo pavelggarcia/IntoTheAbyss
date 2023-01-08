@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+
     void Update()
     {
         _xBar = _thrusterBar.GetXBar();
@@ -110,15 +110,15 @@ public class Player : MonoBehaviour
             }
 
         }
-        if(Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            if(_torpedoeShots >= 1)
+            if (_torpedoeShots >= 1)
             {
                 _torpedoeShots -= 1;
-                Instantiate(_torpedoePrefab, transform.position +new Vector3(0,1,0), Quaternion.identity);
+                Instantiate(_torpedoePrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 _UIManager.UpdateTorpedoeText(_torpedoeShots);
             }
-            
+
         }
 
     }
@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
         {
 
             _shieldSprite = _shield.GetComponent<SpriteRenderer>();
-
+            
             _shieldDamage -= 1;
             if (_shieldDamage == 2)
             {
@@ -250,6 +250,10 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shield.SetActive(true);
+        _shieldDamage = 3;
+        _shieldSprite = _shield.GetComponent<SpriteRenderer>();
+        _shieldSprite.color = new Color(1, 1, 1);
+        
     }
 
     public void AddToScore(int points)
