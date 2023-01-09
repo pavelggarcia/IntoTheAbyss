@@ -7,12 +7,13 @@ public class WaveManager : MonoBehaviour
 {
     private GameObject _enemyContainer;
     private int _enemyCounter;
-    private int _waveCounter;
+    [SerializeField] private int _waveCounter;
     private SpawnManager _spawnManager;
     private bool _canSpawn = true;
     private float _enemyNumber = 10;
     private float _enemyMultiplier = 1.2f;
     private UIManager _uiManager;
+    [SerializeField] private GameObject _bossPrefab;
     
     void Start()
     {
@@ -69,6 +70,10 @@ public class WaveManager : MonoBehaviour
             }
         }
     }
+    private void SpawnBoss()
+    {
+        Instantiate(_bossPrefab, transform.position, Quaternion.identity);
+    }
     private void WaveSwitcher()
     {
         switch (_waveCounter)
@@ -106,8 +111,8 @@ public class WaveManager : MonoBehaviour
                 StartCoroutine(StartWaveRoutine());
                 break;
             case 10:
-                _enemyNumber = Mathf.Floor(_enemyNumber * _enemyMultiplier);
-                StartCoroutine(StartWaveRoutine());
+                SpawnBoss();
+                _uiManager.ShowBossText();
                 break;
         }
     }

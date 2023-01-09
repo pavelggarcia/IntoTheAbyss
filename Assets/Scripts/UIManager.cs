@@ -80,4 +80,16 @@ public class UIManager : MonoBehaviour
         _waveText.enabled = false;
         
     }
+    public void ShowBossText()
+    {
+        StartCoroutine(ShowBossTextRoutine());
+    }
+    IEnumerator ShowBossTextRoutine()
+    {
+        
+        _waveText.enabled =  true;
+        _waveText.text = "BOSS BATTLE!!";
+        yield return new   WaitForSeconds(2);
+        _waveText.enabled = false;
+    }
 }

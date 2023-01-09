@@ -263,7 +263,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "EnemyLaser")
+        if (other.tag == "EnemyLaser" || other.tag == "EnemyTorpedoe"|| other.tag == "BossTorpedo")
         {
             if (_isShieldActive == true)
             {

@@ -176,9 +176,10 @@ public class Enemy : MonoBehaviour
         Destroy(_boxCollider2D);
 
     }
+    //Need to fix bug where enemy fires 2 lasers when instantiated
     private void FireLaser()
-
     {
+
         _fireTime = Time.time + _fireRate;
         _canFire = true;
         // This code checks to see if the enemy is a normal enemy and can only fire downwards
@@ -186,9 +187,8 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(3f, 5f);
             Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
-        }
+        } else if (gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
         // This code checks to see if this enemy can fire backwards 
-        if (gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
         {
             _fireRate = Random.Range(1f, 2f);
             Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));

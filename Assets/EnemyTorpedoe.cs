@@ -5,7 +5,10 @@ using UnityEngine;
 public class EnemyTorpedoe : MonoBehaviour
 {
     private int _speed = 10;
-
+    private void Start()
+    {
+        Destroy(this.gameObject, 7f);
+    }
 
     // Update is called once per frame
     void Update()
@@ -13,11 +16,6 @@ public class EnemyTorpedoe : MonoBehaviour
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (transform.position.y <= -13)
         {
-            if (transform.parent != null)
-            {
-                Destroy(transform.parent.gameObject);
-            }
-
             Destroy(gameObject);
         }
     }
