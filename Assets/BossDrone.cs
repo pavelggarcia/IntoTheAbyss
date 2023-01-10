@@ -18,12 +18,11 @@ public class BossDrone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Destroy(gameObject,10f);
         _playerPos = GameObject.Find("Player").transform;
         transform.position = new Vector3((Random.Range(-18, 18)), 15, 0);
         _entranceTime = Time.time + 5f;
         NewPosForDrone();
-        _bossObject = GameObject.Find("Boss");
+        _bossObject = GameObject.Find("Boss(Clone)");
         if(_bossObject != null)
         {
             _boss = _bossObject.GetComponent<Boss>();
@@ -33,11 +32,8 @@ public class BossDrone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_boss != null)
-        {
-            _bossHealth = _boss.GetHealth();
-        }
-        
+        CalculateMovement();
+        _bossHealth = _boss.GetHealth();
         Debug.Log("From drone " + _bossHealth);
         
         if (_playerPos != null)
@@ -50,7 +46,7 @@ public class BossDrone : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _newPos, _moveSpeed * Time.deltaTime);
         }
-        CalculateMovement();
+        
         if(_bossHealth < 350)
         {
             Destroy(this.gameObject);
@@ -59,7 +55,7 @@ public class BossDrone : MonoBehaviour
     }
     private void NewPosForDrone()
     {
-        _newPos = new Vector3(Random.Range(-18, 18), Random.Range(5, 9), 0);
+        _newPos = new Vector3(Random.Range(-18, 18), Random.Range(5, 10), 0);
     }
     private void CalculateMovement()
     {

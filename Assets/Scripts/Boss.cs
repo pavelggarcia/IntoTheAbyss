@@ -19,6 +19,9 @@ public class Boss : MonoBehaviour
     private float _fireTime = -1f;
     private float _fireRate = .5f;
     [SerializeField] GameObject _bulletPrefab;
+    private int _bossHealth;
+    public EnemyHealthBar HealthBar;
+    private int _maxHealth = 1000;
 
     
     void Start()
@@ -28,6 +31,8 @@ public class Boss : MonoBehaviour
         _bossMoveTime = -1f;
         transform.position = new Vector3((Random.Range(-18, 18)), 15, 0);
         NewPosForBoss();
+        HealthBar.SetHealth(_health, _maxHealth);
+
     }
 
     // Update is called once per frame
@@ -53,7 +58,8 @@ public class Boss : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        _bossHealth = _health;
+        HealthBar.SetHealth(_health, _maxHealth);
     }
     private void NewPosForBoss()
     {
@@ -130,7 +136,7 @@ public class Boss : MonoBehaviour
     }
     public int GetHealth()
     {
-        int _bossHealth = _health;
         return _bossHealth;
     }
+
 }
