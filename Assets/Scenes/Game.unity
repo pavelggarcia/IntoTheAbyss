@@ -1496,7 +1496,7 @@ MonoBehaviour:
   _laserAudio: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _explosionAudio: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _secondaryFire: {fileID: 489266942}
-  _progressBar: {fileID: 415413163}
+  _thrusterBarObject: {fileID: 415413163}
   _mainCamera: {fileID: 1252326456}
   _torpedoePrefab: {fileID: 2397726722093680181, guid: ca48c39328eaf5041b293a7f43d4cd51, type: 3}
 --- !u!212 &1082579228
@@ -2827,12 +2827,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
   - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
   - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
-  _LivesImg: {fileID: 278389031}
+  _livesImg: {fileID: 278389031}
   _gameOverText: {fileID: 1168175231}
   _restartLevelText: {fileID: 1047418917}
   _ammoText: {fileID: 868011669}
   _waveText: {fileID: 1406874504}
-  _torpedoeText: {fileID: 1313976929}
+  _torpedoText: {fileID: 1313976929}
 --- !u!1 &2008139193
 GameObject:
   m_ObjectHideFlags: 0

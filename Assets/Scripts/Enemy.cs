@@ -170,8 +170,10 @@ public class Enemy : MonoBehaviour
     // This code is for after the enemy is destroyed, so that the enemy can't fire after being destoryed
     private void RemoveComponents()
     {
-        _fireRate = Time.time * 100;
+        _fireRate = Mathf.Infinity;
+        _fireTime = Mathf.Infinity;
         _canFire = false;
+        _canFireBackwards = false;
         Destroy(_rigidBody2D);
         Destroy(_boxCollider2D);
 
@@ -192,7 +194,6 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(1f, 2f);
             Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
-            Debug.Log("Enemy 3 laser");
         }
         _canFire = false;
     }
