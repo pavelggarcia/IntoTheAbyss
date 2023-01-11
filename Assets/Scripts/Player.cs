@@ -6,21 +6,19 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 10f;
-    //private float _speedMultiplier = 2f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private float _canFire = -1f;
     [SerializeField] private int _lives = 3;
     private int _shieldDamage = 3;
-
     private SpawnManager _spawnManager;
     [SerializeField] private bool _isTripleShotActive = false;
     private int _TripleShotTime = 5;
     private bool _isShieldActive = false;
     [SerializeField] private GameObject _shield;
     [SerializeField] private int _score;
-    private UIManager _UIManager;
+    private UIManager _uiManager;
     private GameManager _gameManager;
     [SerializeField] private GameObject _rightEngine;
     [SerializeField] private GameObject _leftEngine;
@@ -31,8 +29,8 @@ public class Player : MonoBehaviour
     private int _laserShots = 100;
     private int _torpedoeShots = 10;
     [SerializeField] private GameObject _secondaryFire;
-    [SerializeField] private GameObject _progressBar;
-    private ProgressBar _thrusterBar;
+    [SerializeField] private GameObject _thrusterBarObject;
+    private ProgressBar _progressBar;
     private float _xBar;
     [SerializeField] private GameObject _mainCamera;
     private CameraShake _cameraShake;
@@ -44,11 +42,11 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
-        _thrusterBar = _progressBar.GetComponent<ProgressBar>();
+        _progressBar = _thrusterBarObject.GetComponent<ProgressBar>();
         _cameraShake = _mainCamera.GetComponent<CameraShake>();
 
         if (_cameraShake == null)
@@ -56,7 +54,7 @@ public class Player : MonoBehaviour
             Debug.LogError("CameraShake is NULL");
         }
 
-        if (_thrusterBar == null)
+        if (_progressBar == null)
         {
             Debug.LogError("Thruster Bar is NULL");
         }
@@ -84,7 +82,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        _xBar = _thrusterBar.GetXBar();
+        _xBar = _progressBar.GetXBar();
 
         CalculateMovement();
 
@@ -94,7 +92,7 @@ public class Player : MonoBehaviour
             {
                 _laserShots -= 1;
                 FireLaser();
-                _UIManager.UpdateAmmoText(_laserShots);
+                _uiManager.UpdateAmmoText(_laserShots);
             }
 
         }
@@ -116,7 +114,7 @@ public class Player : MonoBehaviour
             {
                 _torpedoeShots -= 1;
                 Instantiate(_torpedoePrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-                _UIManager.UpdateTorpedoeText(_torpedoeShots);
+                _uiManager.UpdateTorpedoeText(_torpedoeShots);
             }
 
         }
@@ -147,7 +145,7 @@ public class Player : MonoBehaviour
         transform.Translate(direction * _speed * Time.deltaTime);
         PlayerThruster();
 
-        // THis code restricts the player movement in the Y axis
+        // This code restricts the player movement in the Y axis
         if (transform.position.y >= 10)
         {
             transform.position = new Vector3(transform.position.x, 10, 0);
@@ -171,7 +169,6 @@ public class Player : MonoBehaviour
     {
         _cameraShake.ItsShakinTime();
         // This code manages the Shield Damage and visualization
-
         if (_isShieldActive == true)
         {
 
@@ -208,12 +205,12 @@ public class Player : MonoBehaviour
         {
             _leftEngine.SetActive(true);
         }
-        _UIManager.UpdateLives(_lives);
+        _uiManager.UpdateLives(_lives);
         if (_lives < 1)
         {
             _spawnManager.onPlayerDeath();
-            _UIManager.GameOverText();
-            _UIManager.RestartLevelText();
+            _uiManager.GameOverText();
+            _uiManager.RestartLevelText();
             _gameManager.GameOver();
             Destroy(this.gameObject);
         }
@@ -234,8 +231,6 @@ public class Player : MonoBehaviour
     }
     // Power up touches player, power up script calls triple shot active method, triple shot method starts triple shot corotuine which starts a 5 second timer
     // need to make it so that once the power up is collected, it adds 5 seconds to the TripleShotTime, Triple shot time should start at 0, and once powerup is collected it will add 5 seconds, if a second one is collected it will add another 5 seconds, once the time runs out, back to single laser. 
-
-
     public void SpeedBoostActive()
     {
         _speed = 15f;
@@ -253,13 +248,12 @@ public class Player : MonoBehaviour
         _shieldDamage = 3;
         _shieldSprite = _shield.GetComponent<SpriteRenderer>();
         _shieldSprite.color = new Color(1, 1, 1);
-        
     }
 
     public void AddToScore(int points)
     {
         _score += points;
-        _UIManager.UpdateScore(_score);
+        _uiManager.UpdateScore(_score);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -278,20 +272,20 @@ public class Player : MonoBehaviour
     public void AddToAmmo()
     {
         _laserShots = 100;
-        _UIManager.UpdateAmmoText(_laserShots);
+        _uiManager.UpdateAmmoText(_laserShots);
     }
 
     public void AddToTorpedoeAmmo()
     {
         _torpedoeShots = 10;
-        _UIManager.UpdateTorpedoeText(_torpedoeShots);
+        _uiManager.UpdateTorpedoeText(_torpedoeShots);
     }
     public void AddToLife()
     {
         if (_lives < 3)
         {
             _lives += 1;
-            _UIManager.UpdateLives(_lives);
+            _uiManager.UpdateLives(_lives);
             if (_lives == 3)
             {
                 _rightEngine.SetActive(false);
@@ -313,16 +307,15 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _secondaryFire.SetActive(false);
     }
-    // need to fix bug where if thruster is added, the speed power up is taken away
+
     private void PlayerThruster()
     {
         if (_canBoost == true)
         {
             if (Input.GetKey(KeyCode.LeftShift) && _xBar > 0f)
             {
-
                 _speed = 15f;
-                _thrusterBar.AddThruster();
+                _progressBar.AddThruster();
                 if (_xBar <= 0.01f)
                 {
                     _speed = 10f;
@@ -334,7 +327,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift) && _xBar < 1.2f)
         {
             _speed = 10f;
-            _thrusterBar.RemoveThruster();
+            _progressBar.RemoveThruster();
             _canBoost = true;
         }
     }

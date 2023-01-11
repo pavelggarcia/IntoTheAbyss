@@ -14,7 +14,7 @@ public class Test : MonoBehaviour
     void Update()
     {
         
-        transform.Translate(new Vector3(Mathf.Sin(Time.time*6),(1), 0)  *15 *Time.deltaTime);
+        transform.Translate(new Vector3(Mathf.Sin(Time.time*6),1, 0)  *15 *Time.deltaTime);
     }
     
 }

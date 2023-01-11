@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     private float _roationModifier = -90;
     private bool _canFireBackwards = false;
     private bool _canDodge = true;
-    private int XPos;
+    private int _xPosToDodge;
 
 
     // Start is called before the first frame update
@@ -90,11 +90,11 @@ public class Enemy : MonoBehaviour
             Vector3 _vectorToTarget = _playerPos.transform.position - transform.position;
             _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
 
-            if (transform.position.y < _playerPos.transform.position.y && gameObject.name == "Enemy3")
+            if (transform.position.y < _playerPos.transform.position.y && gameObject.name == "Enemy3(Clone)")
             {
                 _canFireBackwards = true;
             }
-            if (transform.position.y > _playerPos.transform.position.y && gameObject.name == "Enemy3")
+            if (transform.position.y > _playerPos.transform.position.y && gameObject.name == "Enemy3(Clone)")
             {
                 _canFireBackwards = false;
             }
@@ -176,10 +176,10 @@ public class Enemy : MonoBehaviour
         Destroy(_boxCollider2D);
 
     }
-    //Need to fix bug where enemy fires 2 lasers when instantiated
+
     private void FireLaser()
     {
-
+        _fireRate = Random.Range(3f, 5f);
         _fireTime = Time.time + _fireRate;
         _canFire = true;
         // This code checks to see if the enemy is a normal enemy and can only fire downwards
@@ -187,11 +187,12 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(3f, 5f);
             Instantiate(_laserPrefab, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
-        } else if (gameObject.name == "Enemy3" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
+        } else if (gameObject.name == "Enemy3(Clone)" && transform.position.y < _playerPos.transform.position.y && _canFireBackwards == true)
         // This code checks to see if this enemy can fire backwards 
         {
             _fireRate = Random.Range(1f, 2f);
             Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
+            Debug.Log("Enemy 3 laser");
         }
         _canFire = false;
     }
@@ -219,14 +220,14 @@ public class Enemy : MonoBehaviour
         
         if(DodgePicker == 1)
         {
-            XPos = 3;
+            _xPosToDodge = 3;
         }
         else if(DodgePicker ==2)
         {
-            XPos = -3;
+            _xPosToDodge = -3;
         }
         
-        Vector3 NewPos = transform.position + new Vector3(XPos, 0.5f, 0);
+        Vector3 NewPos = transform.position + new Vector3(_xPosToDodge, 0.5f, 0);
         if(_canDodge == true)
         {
             _canDodge = false;

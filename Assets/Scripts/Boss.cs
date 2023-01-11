@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     private float _bossMoveFrequency = 5f;
     [SerializeField] GameObject _enemyPlasmaPrefab;
     private Transform _playerPos;
-    private float _angle;
+    private float _angleToPlayer;
     [SerializeField] GameObject _dronePrefab;
     private int _numberOfBullets = 8;
     private int _startingAngle = 0;
@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
     public EnemyHealthBar HealthBar;
     private int _maxHealth = 1000;
 
-    
+
     void Start()
     {
         _playerPos = GameObject.Find("Player").transform;
@@ -35,11 +35,8 @@ public class Boss : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-
         if (Time.time < _entranceTime)
         {
             transform.position = Vector3.MoveTowards(transform.position, _newPos, _moveSpeed * Time.deltaTime);
@@ -48,13 +45,13 @@ public class Boss : MonoBehaviour
         {
             CalculateMovement();
         }
-        if(_playerPos != null)
+        if (_playerPos != null)
         {
             // This code is calculating the angle to the player every frame
             Vector3 _vectorToTarget = _playerPos.position - transform.position;
-            _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - 90;
+            _angleToPlayer = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - 90;
         }
-        if(_health <= 0)
+        if (_health <= 0)
         {
             Destroy(gameObject);
         }
@@ -77,7 +74,7 @@ public class Boss : MonoBehaviour
             }
             transform.position = Vector3.MoveTowards(transform.position, _newPos, _moveSpeed * Time.deltaTime);
         }
-        else if(_health <= 699 && _health >= 350)
+        else if (_health <= 699 && _health >= 350)
         {
             if (Time.time > _bossMoveTime)
             {
@@ -89,49 +86,53 @@ public class Boss : MonoBehaviour
             }
             transform.position = Vector3.MoveTowards(transform.position, _newPos, _moveSpeed * Time.deltaTime);
         }
-        else if( _health <= 349)
+        else if (_health <= 349)
         {
-            Vector3 FinalPos = new Vector3(0,0,0);
-            transform.position = Vector3.MoveTowards(transform.position, FinalPos,_moveSpeed * Time.deltaTime );
-            if(Time.time > _fireTime)
-        {
-            _fireTime = Time.time+_fireRate;
-            for(int i =0; i < _numberOfBullets; i++)
-            {
-                Instantiate(_bulletPrefab, transform.position, Quaternion.AngleAxis(_startingAngle, Vector3.forward));
-                _startingAngle += 45;
-            }
+            Vector3 FinalPos = new Vector3(0, 0, 0);
+            transform.position = Vector3.MoveTowards(transform.position, FinalPos, _moveSpeed * Time.deltaTime);
+            FirePhaseThree();
         }
-        }
-        
+
     }
     private void FirePhaseOneGuns()
     {
         int _numberOfBullets = 5;
         int _fireAngle = 0;
-        for(int b = 0; b < _numberOfBullets; b++)
+        for (int b = 0; b < _numberOfBullets; b++)
         {
             Debug.Log("hello!");
-            Instantiate(_enemyPlasmaPrefab, transform.position, Quaternion.AngleAxis((_angle +_fireAngle)-180 , Vector3.forward));
-            Instantiate(_enemyPlasmaPrefab, transform.position, Quaternion.AngleAxis((_angle - _fireAngle) -180 , Vector3.forward));
+            Instantiate(_enemyPlasmaPrefab, transform.position, Quaternion.AngleAxis((_angleToPlayer + _fireAngle) - 180, Vector3.forward));
+            Instantiate(_enemyPlasmaPrefab, transform.position, Quaternion.AngleAxis((_angleToPlayer - _fireAngle) - 180, Vector3.forward));
             _fireAngle += 15;
 
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void FirePhaseThree()
     {
-        if(other.tag == "Laser")
+        if (Time.time > _fireTime)
+            {
+                _fireTime = Time.time + _fireRate;
+                for (int i = 0; i < _numberOfBullets; i++)
+                {
+                    Instantiate(_bulletPrefab, transform.position, Quaternion.AngleAxis(_startingAngle, Vector3.forward));
+                    _startingAngle += 45;
+                }
+            }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Laser")
         {
             _health -= 10;
             Destroy(other.gameObject);
         }
-        if(other.tag == "Torpedoe")
+        if (other.tag == "Torpedoe")
         {
             _health -= 50;
             Destroy(other.gameObject);
         }
-        
+
         Debug.Log(_health);
     }
     public int GetHealth()

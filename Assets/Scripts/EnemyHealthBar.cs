@@ -10,7 +10,6 @@ public class EnemyHealthBar : MonoBehaviour
     public Color High;
     private Vector3 Offset = new Vector3(0,3,0);
     
-    
     public void SetHealth(int health, int maxHealth)
     {
         HealthSlider.gameObject.SetActive(health < maxHealth);
@@ -20,7 +19,6 @@ public class EnemyHealthBar : MonoBehaviour
         HealthSlider.fillRect.GetComponentInChildren<Image>().color = Color.Lerp(Low, High, HealthSlider.normalizedValue);
     }
 
-    // Update is called once per frame
     void Update()
     {
         HealthSlider.transform.position = Camera.main.WorldToScreenPoint(transform.parent.position + Offset);

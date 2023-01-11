@@ -10,7 +10,6 @@ public class EnemyTorpedoe : MonoBehaviour
         Destroy(this.gameObject, 7f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);

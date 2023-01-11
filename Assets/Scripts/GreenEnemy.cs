@@ -8,33 +8,27 @@ public class GreenEnemy : MonoBehaviour
     [SerializeField] private int _speed = 1;
     [SerializeField] private float _roationModifier;
     [SerializeField] private GameObject _laserPrefab;
-    private float _angle;
+    private float _angleToPlayer;
     private float _fireRate;
     private float _fireTime = -1;
     private Player _player;
 
-
-
-    // Start is called before the first frame update
 
     private void Start()
     {
         _playerPos = GameObject.Find("Player").transform;
         _player = GameObject.Find("Player").GetComponent<Player>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (transform != null && _playerPos != null)
         {
             Vector3 _vectorToTarget = _playerPos.position - transform.position;
-            _angle = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
-            Quaternion q = Quaternion.AngleAxis(_angle, Vector3.forward);
+            _angleToPlayer = Mathf.Atan2(_vectorToTarget.y, _vectorToTarget.x) * Mathf.Rad2Deg - _roationModifier;
+            Quaternion q = Quaternion.AngleAxis(_angleToPlayer, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * _speed);
         }
-
-
-
 
         if (Time.time > _fireTime)
         {
@@ -44,7 +38,6 @@ public class GreenEnemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     private void FireLaser()
@@ -52,13 +45,11 @@ public class GreenEnemy : MonoBehaviour
         _fireRate = Random.Range(1.0f, 2f);
         _fireTime = Time.time + _fireRate;
 
-        Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
-
+        Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angleToPlayer));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
@@ -66,10 +57,6 @@ public class GreenEnemy : MonoBehaviour
             {
                 player.Damage();
             }
-            //RemoveComponents();
-            //_anim.SetTrigger("OnEnemyDeath");
-            //_audioSource.Play();
-            //_isAlive = false;
             Destroy(this.gameObject, 0.1f);
         }
 
@@ -81,10 +68,6 @@ public class GreenEnemy : MonoBehaviour
             {
                 _player.AddToScore(10);
             }
-            //RemoveComponents();
-            //_anim.SetTrigger("OnEnemyDeath");
-            //_audioSource.Play();
-            //_isAlive = false;
             Destroy(this.gameObject, 0.1f);
         }
     }

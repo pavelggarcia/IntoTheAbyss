@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
     private float _enemyMultiplier = 1.2f;
     private UIManager _uiManager;
     [SerializeField] private GameObject _bossPrefab;
-    
+
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -29,23 +29,20 @@ public class WaveManager : MonoBehaviour
         {
             Debug.LogError("Spawn Manager is NULL");
         }
-        if(_uiManager == null)
+        if (_uiManager == null)
         {
             Debug.LogError("UI manager is NULL");
         }
     }
 
-   
+
     void Update()
     {
         _enemyCounter = _enemyContainer.transform.childCount;
-        
-        
     }
 
     public void StartTheWaves()
     {
-
         StartCoroutine(StartWaveRoutine());
     }
     IEnumerator StartWaveRoutine()

@@ -9,15 +9,15 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private Sprite[] _liveSprite;
-    [SerializeField] private Image _LivesImg;
+    [SerializeField] private Image _livesImg;
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private TMP_Text _restartLevelText;
     [SerializeField] private TMP_Text _ammoText;
     [SerializeField]private TMP_Text _waveText;
-    [SerializeField] private TMP_Text _torpedoeText;
+    [SerializeField] private TMP_Text _torpedoText;
     
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         _gameOverText.enabled = false;
@@ -25,7 +25,6 @@ public class UIManager : MonoBehaviour
         _waveText.enabled = false;
     }
 
-    // Update is called once per frame
     
     public void UpdateScore(int PlayerScore)
     {
@@ -34,7 +33,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLives(int currentLives)
     {
-        _LivesImg.sprite = _liveSprite[currentLives];
+        _livesImg.sprite = _liveSprite[currentLives];
     }
     public void GameOverText()
     {
@@ -48,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTorpedoeText ( int TorpedoeCount)
     {
-        _torpedoeText.text = TorpedoeCount + " / 10";
+        _torpedoText.text = TorpedoeCount + " / 10";
     }
 
     IEnumerator FlashGameOverRoutine()
@@ -59,13 +58,11 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             _gameOverText.enabled = false;
             yield return new WaitForSeconds(0.3f);
-            
         }
     }
     public void RestartLevelText()
     {
         _restartLevelText.enabled = true;
-        
     }
 
     public void GetShowWaveText(int wave)
@@ -78,7 +75,6 @@ public class UIManager : MonoBehaviour
         _waveText.text = "Wave " + wave;
         yield return new WaitForSeconds(2);
         _waveText.enabled = false;
-        
     }
     public void ShowBossText()
     {
@@ -86,7 +82,6 @@ public class UIManager : MonoBehaviour
     }
     IEnumerator ShowBossTextRoutine()
     {
-        
         _waveText.enabled =  true;
         _waveText.text = "BOSS BATTLE!!";
         yield return new   WaitForSeconds(2);

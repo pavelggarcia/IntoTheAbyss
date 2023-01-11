@@ -8,7 +8,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemy3Prefab;
     [SerializeField] private GameObject _enemyContainer;
-    //[SerializeField] private float _enemySpawnTime = 4.0f;
     private bool _stopSpawning = false;
     [SerializeField] private GameObject[] powerups;
     private WaveManager _waveManager;
@@ -24,13 +23,10 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError("Wave Manager is NULL");
         }
-        
-
     }
 
     public void StartSpawning()
     {
-        
         StartCoroutine(SpawnCommonPowerUpRoutine());
         _waveManager.StartTheWaves();
         StartCoroutine(SpawnEnemySatellites());
@@ -95,7 +91,6 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-
 
     public void onPlayerDeath()
     {

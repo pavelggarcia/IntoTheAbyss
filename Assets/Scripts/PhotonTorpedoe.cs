@@ -5,16 +5,16 @@ using UnityEngine;
 public class PhotonTorpedoe : MonoBehaviour
 {
     private GameObject[] _enemies;
-    private GameObject _target;
+    private GameObject _closestEnemy;
     private float _distance = Mathf.Infinity;
     private float _movementSpeed = 10f;
     
     void Update()
     {
         CalculateNearestEnemy();
-        if(_target != null)
+        if(_closestEnemy != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _target.transform.position, _movementSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, _closestEnemy.transform.position, _movementSpeed * Time.deltaTime);
         } else
         {
             transform.Translate(Vector3.up *_movementSpeed *Time.deltaTime);
@@ -35,12 +35,12 @@ public class PhotonTorpedoe : MonoBehaviour
             float dist = Vector2.Distance(transform.position, e.transform.position);
             if (dist < _distance)
             {
-                _target = e;
+                _closestEnemy = e;
                 _distance = dist;
-                if(_target.GetComponent<Rigidbody2D>() == null)
+                if(_closestEnemy.GetComponent<Rigidbody2D>() == null)
                 {
                     _distance = Mathf.Infinity;
-                    _target = null;
+                    _closestEnemy = null;
                 }
             }
         }

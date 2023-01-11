@@ -10,13 +10,7 @@ public class bulletManager : MonoBehaviour
     private float _fireTime = -1f;
     private float _fireRate = 0.5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Q))
@@ -26,7 +20,6 @@ public class bulletManager : MonoBehaviour
                 Instantiate(_bulletPrefab, transform.position, Quaternion.AngleAxis(_startingAngle, Vector3.forward));
                 _startingAngle += 45;
             }
-            //Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
         }
         if(Time.time > _fireTime)
         {
@@ -37,6 +30,5 @@ public class bulletManager : MonoBehaviour
                 _startingAngle += 45;
             }
         }
-
     }
 }
