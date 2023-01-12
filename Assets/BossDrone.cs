@@ -34,8 +34,6 @@ public class BossDrone : MonoBehaviour
     {
         CalculateMovement();
         _bossHealth = _boss.GetHealth();
-        Debug.Log("From drone " + _bossHealth);
-
         if (_playerPos != null)
         {
             // This code is calculating the angle to the player every frame

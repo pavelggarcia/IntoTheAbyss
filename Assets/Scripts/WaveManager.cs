@@ -89,9 +89,10 @@ public class WaveManager : MonoBehaviour
                 break;
             case 5:
                 _enemyNumber = Mathf.Floor(_enemyNumber * _enemyMultiplier);
-                StartCoroutine(StartWaveRoutine());
+                SpawnBoss();
+                _uiManager.ShowBossText();
                 break;
-            case 6:
+            /* case 6:
                 _enemyNumber = Mathf.Floor(_enemyNumber * _enemyMultiplier);
                 StartCoroutine(StartWaveRoutine());
                 break;
@@ -110,7 +111,7 @@ public class WaveManager : MonoBehaviour
             case 10:
                 SpawnBoss();
                 _uiManager.ShowBossText();
-                break;
+                break; */
         }
     }
 
