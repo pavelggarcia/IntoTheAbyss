@@ -164,6 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 76909033}
   - component: {fileID: 76909034}
+  - component: {fileID: 76909035}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -282,6 +283,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &76909035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76909032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc8ede4b9e5b6b4e908fa26cb145a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backgroundMusic: {fileID: 8300000, guid: b0e5bc9db999f6f449ae5d3396fc0dad, type: 3}
+  _bossOneMusic: {fileID: 8300000, guid: 0b78540bdf2b05648b96f1fc88ff8a74, type: 3}
 --- !u!1 &148078552
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,6 +3035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waveCounter: 10
   _bossPrefab: {fileID: 6372628407681891326, guid: 5939b5e44463fe547b2e3011c0879cbb, type: 3}
+  _audioManager: {fileID: 76909032}
 --- !u!1 &2058650765
 GameObject:
   m_ObjectHideFlags: 0

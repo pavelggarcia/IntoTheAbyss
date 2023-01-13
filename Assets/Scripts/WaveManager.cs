@@ -14,9 +14,12 @@ public class WaveManager : MonoBehaviour
     private float _enemyMultiplier = 1.2f;
     private UIManager _uiManager;
     [SerializeField] private GameObject _bossPrefab;
+    private AudioSwitcher _audioSwitcher;
+    [SerializeField] private GameObject _audioManager;
 
     void Start()
     {
+        _audioSwitcher = _audioManager.GetComponent<AudioSwitcher>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _spawnManager = GetComponent<SpawnManager>();
         _waveCounter = 1;
@@ -33,6 +36,7 @@ public class WaveManager : MonoBehaviour
         {
             Debug.LogError("UI manager is NULL");
         }
+        _audioSwitcher.PlayBackgroundMusic();
     }
 
 
@@ -90,7 +94,12 @@ public class WaveManager : MonoBehaviour
             case 5:
                 _enemyNumber = Mathf.Floor(_enemyNumber * _enemyMultiplier);
                 SpawnBoss();
+                _audioSwitcher.PlayBossMusic();
+                _audioManager.GetComponent<AudioSource>().enabled = false;
+                _audioManager.GetComponent<AudioSource>().enabled = true;
+                _audioManager.GetComponent<AudioSource>().volume = 0.5f;
                 _uiManager.ShowBossText();
+                _audioSwitcher.PlayBossMusic();
                 break;
             /* case 6:
                 _enemyNumber = Mathf.Floor(_enemyNumber * _enemyMultiplier);
