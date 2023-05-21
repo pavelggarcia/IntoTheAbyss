@@ -53,7 +53,7 @@ public class PowerUp : MonoBehaviour
         {
             if (_player != null)
             {
-                AudioSource.PlayClipAtPoint(_powerupAudio, transform.position);
+                //AudioSource.PlayClipAtPoint(_powerupAudio, transform.position);
                 switch (powerupID)
                 {
                     case 0:
@@ -84,6 +84,7 @@ public class PowerUp : MonoBehaviour
                         Debug.Log("Default Value");
                         break;
                 }
+                AudioSource.PlayClipAtPoint(_powerupAudio,transform.position, 300);
             }
             Destroy(this.gameObject);
         }
